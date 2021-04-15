@@ -26,6 +26,9 @@ const STOP_WORD = 'exit';
 //   }
 //   console.log(data)
 // })
+
+// fs.mkdirSync('loh/pedr');//Если loh создан, то pedr будет создан в нём.
+
 let answer;
 while (answer!=STOP_WORD){
   answer = write();
@@ -35,7 +38,7 @@ function write(){
   let BEM = readline.question("Create block: ");
   if (BEM != STOP_WORD){
     createFolder(BEM);
-    console.log("Block " + BEM + " was created.\n");
+    // console.log("Block " + BEM + " was created.\n");
   }
   return BEM
 }
@@ -55,8 +58,10 @@ function createFolder(folder){
 
     if (!fs.existsSync(pathArr[k])){
       console.log(`pathArr[${k}] = ${pathArr[k]}`);
-      fs.mkdirSync(directoriesArr.join() + pathArr[k]);
-      // directoriesArr.pushArr[k];
+      console.log(`directoriesArr.join(/) = ${directoriesArr.join('/')}`);
+      console.log(`final path = ${directoriesArr.join('/') + '/' + pathArr[k]}`);
+      fs.mkdirSync(directoriesArr.join('/') + '/' + pathArr[k]);
+      directoriesArr.push(pathArr[k]);
     }
 
     k++;
