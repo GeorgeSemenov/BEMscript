@@ -4,8 +4,14 @@
 const fs = require('fs');
 const readline = require('readline-sync');
 
-const STOP_WORD = 'exit';
+/* ---- Самодельные функшины ---- */
 
+const createFolder = require('./createFolder.js');
+
+/* ---- Переменные ---- */
+
+const STOP_WORD = 'exit';
+const ONE_LEVEL_UP_WORD = 'up';
 // if (!fs.existsSync(dir)){
 //     fs.mkdirSync(dir);
 // }
@@ -41,29 +47,4 @@ function write(){
     // console.log("Block " + BEM + " was created.\n");
   }
   return BEM
-}
-
-function createFolder(folder){
-  let pathArr = folder.split('/');
-  let directoriesArr = [];//Пустой архив директорий, которые уже прошёл node см ниже  
-  let k = 0;
-  // pathArr.forEach(function(item){
-  //   if (!fs.existsSync(item)){
-  //     fs.mkdirSync(item);
-  //   }
-  // })
-  while (k < pathArr.length){
-    console.log('k = ' + k);
-
-
-    if (!fs.existsSync(pathArr[k])){
-      console.log(`pathArr[${k}] = ${pathArr[k]}`);
-      console.log(`directoriesArr.join(/) = ${directoriesArr.join('/')}`);
-      console.log(`final path = ${directoriesArr.join('/') + '/' + pathArr[k]}`);
-      fs.mkdirSync(directoriesArr.join('/') + '/' + pathArr[k]);
-      directoriesArr.push(pathArr[k]);
-    }
-
-    k++;
-  }
 }
