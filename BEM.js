@@ -6,45 +6,30 @@ const readline = require('readline-sync');
 
 /* ---- Самодельные функшины ---- */
 
-const createFolder = require('./createFolder.js');
+const createFolder = require('./BEMscripts/createFolder.js');
+const writeToFile = require('./BEMscripts/writeToFile.js');
+const readFromFile = require('./BEMscripts/readFromFile.js');
 
 /* ---- Переменные ---- */
 
-const STOP_WORD = 'exit';
-const ONE_LEVEL_UP_WORD = 'up';
-// if (!fs.existsSync(dir)){
-//     fs.mkdirSync(dir);
-// }
+const v = require('./BEMscripts/variables.js');
 
-// fs.writeFile("folder\input here.txt", "Hey there!", function(err) {
-//     if(err) {
-//       console.log('\n\n-----------Error description beginning-----------\n');
-//       console.log(err);
-//       console.log('\n-----------Error description end-----------\n\n')
-//     }
-//     console.log("The file was saved!");
-// }); 
+let BEM = {
+  amountOfBlocks: 0,//Сколько всего блоков
+  currentBEM: "",//над каким БЭМ блоком в данный момент идёт работа.
+  blocksArr: [],//Массив строк, в каждой строке название блока
 
-// fs.readFile('input here.txt', 'utf8' , (err, data) => {
-//   if (err) {
-//     console.error(err)
-//     return
-//   }
-//   console.log(data)
-// })
+  init                  : require('./BEMscripts/_init.js'),//инициируем объект(все его переменные), используя базу данных, если базы нет, создаём её
+  ask                   : require('./BEMscripts/_ask.js'),//Спрашиваем - что быдем создавать
+  create                : require('./BEMscripts/_create.js'),//Создаём БЭМ сущность с именем = this.currentBEM
+  logToDatabase         : require('./BEMscripts/_logToDatabase.js'),
+  showBlocks            : require('./BEMscripts/_showBlocks.js'),
+  chooseBlock           : require('./BEMscripts/_chooseBlock.js'),
+  returnCorrectBEMName  : require('./BEMscripts/_returnCorrectBEMName.js'),
+  handleAnswer          : require('./BEMscripts/_handleAnswer.js'),
+};
 
-// fs.mkdirSync('loh/pedr');//Если loh создан, то pedr будет создан в нём.
-
-let answer;
-while (answer!=STOP_WORD){
-  answer = write();
-}
-
-function write(){
-  let BEM = readline.question("Create block: ");
-  if (BEM != STOP_WORD){
-    createFolder(BEM);
-    // console.log("Block " + BEM + " was created.\n");
-  }
-  return BEM
+BEM.init()
+while (BEM.currentBEM!=v.STOP_WORD){//Основной цикл
+  BEM.ask();
 }
