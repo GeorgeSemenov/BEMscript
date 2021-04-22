@@ -6,7 +6,7 @@ const v = require('./variables.js');
 const _init = function (BEM){//Получаем первичные данные amountOfBlocks и массив блоков blocksArr
   let DBContent = readFromFile(v.DATABASE_NAME);
   if (DBContent == -1){ //Если базы данных нет, то создаём её с пустым наполнением.
-    console.log("data base file didn't exist\nDon't worry, i'll create it.");
+    console.log("Data base file didn't exist\nDon't worry, i'll create it.");
     writeToFile(v.DATABASE_NAME,"");
     this.amountOfBlocks=0;
   }
