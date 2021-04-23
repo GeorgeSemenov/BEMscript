@@ -11,8 +11,9 @@ const _init = function (BEM){//Получаем первичные данные 
     this.amountOfBlocks=0;
   }
   else{
-    this.blocksArr = DBContent.split(v.SYMBOL_END_OF_LINE);
-    this.amountOfBlocks = this.blocksArr.length;
+    // this.blocksArr = DBContent.split(v.SYMBOL_END_OF_LINE);
+    // this.amountOfBlocks = this.blocksArr.length;
+    this.logFromDatabase(DBContent)
   }
   console.log(`total amountOfBlocks = ${this.amountOfBlocks}`);
   this.showBlocks();

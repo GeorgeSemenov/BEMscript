@@ -19,9 +19,10 @@ let BEM = {
   init                  : require('./BEMscripts/_init.js'),//инициируем объект(все его переменные), используя базу данных, если базы нет, создаём её
   ask                   : require('./BEMscripts/_ask.js'),//Спрашиваем - что быдем создавать
   create                : require('./BEMscripts/_create.js'),//Создаём БЭМ сущность с именем = this.currentBEM
-  logToDatabase         : require('./BEMscripts/_logToDatabase.js'),
-  showBlocks            : require('./BEMscripts/_showBlocks.js'),
-  chooseBlock           : require('./BEMscripts/_chooseBlock.js'),
+  logToDatabase         : require('./BEMscripts/_logToDatabase.js'),//Записывает данные в файл базы данных
+  logFromDatabase       : require('./BEMscripts/_logfromDatabase.js'),//Считывает данные с файла базы данных
+  showBlocks            : require('./BEMscripts/_showBlocks.js'),//Выводит список блоков на экран
+  chooseBlock           : require('./BEMscripts/_chooseBlock.js'),//выбирает блок
   returnCorrectBEMName  : require('./BEMscripts/_returnCorrectBEMName.js'),
   handleAnswer          : require('./BEMscripts/_handleAnswer.js'),
 };
