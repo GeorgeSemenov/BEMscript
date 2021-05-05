@@ -2,20 +2,19 @@ const fs = require('fs');
 const createFolder = require('./createFolder.js');
 const writeToFile = require('./writeToFile.js');
 
-const createBEM = function (){
-  console.log(`creating begin`);
-  let pugFile = `${this.currentBEM}/${this.currentBEM}.pug`;
-  let scssFile = `${this.currentBEM}/${this.currentBEM}.scss`;
-  let pugBlockText = "mixin " + this.currentBEM + "(modifier)\n  ";
-  let scssBlockText = `.${this.currentBEM}{\n  \n}`;
+const createBEM = function (bemEntity){
+  let pugFile = `${bemEntity}/${bemEntity}.pug`;
+  let scssFile = `${bemEntity}/${bemEntity}.scss`;
+  let pugBlockText = "mixin " + bemEntity + "(modifier)\n  ";
+  let scssBlockText = `.${bemEntity}{\n  \n}`;
 
   try {
-    createFolder(this.currentBEM)
+    createFolder(bemEntity)
     writeToFile(pugFile, pugBlockText)
     writeToFile(scssFile, scssBlockText);
 
     this.blocksArr.push({
-      title:this.currentBEM,
+      title:bemEntity,
       elementsArr : [],
       modifiersArr: []
     });
@@ -23,7 +22,7 @@ const createBEM = function (){
     this.logToDatabase();
     this.showBlocks();
   }
-  catch{console.log(`>>>looks like ${this.currentBEM} directory is created already`);}
+  catch{console.log(`>>>looks like ${bemEntity} directory is created already`);}
 };
 
 module.exports = createBEM;

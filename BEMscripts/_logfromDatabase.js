@@ -35,7 +35,7 @@ const _logFromDatabase = function (DBContent){
       console.log(`as a result blocksArr = ${blocksArr.length}`);
     })
   }catch(err){
-    console.log(`>>>>>\n  Error in module logFromDatabase\n\n${err}`);
+    console.log(`>>>>>\nError in module logFromDatabase\n\n${err}`);
   }
   this.blocksArr= blocksArr;
   this.amountOfBlocks = blockNumber +1;

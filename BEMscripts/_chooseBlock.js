@@ -1,9 +1,10 @@
-const _chooseBlock = function (blockNumber){//Получаем первичные данные amountOfBlocks и массив блоков blocksArr
+const _chooseEntity = function (blockNumber){//Получаем первичные данные amountOfBlocks и массив блоков blocksArr
   if(blockNumber > this.amountOfBlocks){
     console.log("choosen number is too big, where is not so many BEM.");
   }else{
-    console.log(`You have choose ${this.returnCorrectBEMName(this.blocksArr[blockNumber - 1])}`);
+    console.log(`\n>${this.blocksArr[blockNumber - 1].title}`);
+    this.showEnteties(blockNumber);
   }
 };
 
-module.exports = _chooseBlock;
+module.exports = _chooseEntity;

@@ -4,8 +4,6 @@ const v = {
   ONE_LEVEL_UP_WORD               : 'up',
   SYMBOL_END_OF_LINE              : '\n',
   DATABASE_NAME                   : "DB",
-  FIRST_LEVEL_ENTITY_BEGINING     : "  ",
-  SECOND_LEVEL_ENTITY_BEGINING    : "    ",
   ELEMENT_BEGINING                : "__",
   MODIFIER_BEGINING               : "_",
 };
