@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const func = function (currentFolder='./'){
+const func = function (currentFolder=__dirname){
   let folders;
   try{
     folders = fs.readdirSync(currentFolder).filter((file,index) => {

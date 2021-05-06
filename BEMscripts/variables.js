@@ -6,6 +6,7 @@ const v = {
   DATABASE_NAME                   : "DB",
   ELEMENT_BEGINING                : "__",
   MODIFIER_BEGINING               : "_",
+  SYMBOL_BEFORE_ENTITY            : "    ",
 };
 
 module.exports = v;
