@@ -1,23 +1,44 @@
 const bemFolder     = "../BEMscripts/";
 
 let testBem = {
-  blocksArr: [{title: 'block1'}, {title: 'block2'}, {title: 'block3'}],//Массив строк, в каждой строке название блока
+  blocksArr: [
+    undefined,
+    {
+      title: 'block1',
+    }, 
+    {
+      title: 'block2'
+      elements: [
+        {title: "__element-1"},
+        {title: "__element-2"},
+        {title: "__element-3"},
+      ]
+    }, 
+    {
+      title: 'block3'
+      modifications: [
+        {title: "_modification-1"},
+        {title: "_modification-2"},
+        {title: "_modification-3"},
+      ]
+    }, 
+    {
+      title: 'block4'
+      elements: [
+        {title: "__element-1"},
+        {title: "__element-2"},
+        {title: "__element-3"},
+      ],
+      modifications: [
+        {title: "_modification-1"},
+        {title: "_modification-2"},
+        {title: "_modification-3"},
+      ]
+    }
+  ],//Массив строк, в каждой строке название блока
   showEntities : require(bemFolder + '_showEntities.js')
 }
-let tests = [
-  undefined,
-  1,
-  '1',
-  '_',
-  'some text',
-  'some',
-  '_modifier',
-  '__modifier',
-  {title: '_modifier'},
-  {title: '__modifier'},
-  {title: '__modifier', elements: ['__modifierBroken']},
-  {title: '_modifier', elements: ['__modifierBroken'], modifications: ['_modifierBroken']}
-]
+
 tests.forEach((item,index) =>{
   console.log(`(${index}) showEntities(${JSON.stringify(item)}) = ${testBem.showEntities(item)} (${index})`);
 })

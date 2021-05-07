@@ -10,9 +10,10 @@ const getFolders    = require(bemFolder + 'getFolders.js');//возвращае�
 const isElement     = require(bemFolder + 'isElement.js');
 const isModifier    = require(bemFolder + 'isModifier.js');
 
-/* ---- Переменные ---- */
+/* ---- Переменные и классы---- */
 
-const v = require(bemFolder + 'variables.js');
+const v             = require(bemFolder + 'variables.js');
+const cl            = require(bemFolder + 'classes.js');
 
 let BEM = {
   amountOfBlocks: 0,//Сколько всего блоков

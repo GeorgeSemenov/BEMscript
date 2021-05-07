@@ -2,14 +2,12 @@ const isElement   = require('./isElement.js');
 const isModifier  = require('./isModifier.js');
 const v = require('./variables.js');
 
-function showArray(arr){
+function showArray(arr=[],isWithoutIndex=false){
   arr.forEach(function(item, index){
-    if((typeof item) == 'object')
-      console.log(`${index + 1} ${item.title}`); 
-    else if( (typeof item) == 'string' )
-      console.log(`${index + 1} ${item.title}`); 
+    if(isWithoutIndex)
+      console.log(`  ${item.title}`); 
     else
-      console.log('undefined entity');
+      console.log(`${index + 1} ${item.title}`); 
   })
 }
 
@@ -21,15 +19,13 @@ const _showEntities = function (bemEntity){
     (!(isModifier(bemEntity))) &&
     ((typeof bemEntity) == 'object')
     )
-    { //Если не элемент и не модификатор, но объект, значит блок - выводим элементы и модификаторы
-      console.log('block');
+    { //Если не элемент и не модификатор, то объект, значит блок - выводим элементы и модификаторы
     showArray(bemEntity.elements);
-    showArray(bemEntity.modifications);
+    showArray(bemEntity.modifications,true);
   }else if( isElement(bemEntity) ){ //Если это элемент то выводим все модификаторы
-    console.log('element');
-    showArray(bemEntity.modifications)
+    showArray(bemEntity.modifications,true)
   }else{
-    console.log(">>>>undefined array of entities");
+    console.log("\n>>>>Method showEntities can't display array, cause undefined array of entities\n");
   }
 };
 
