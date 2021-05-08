@@ -1,4 +1,5 @@
 const bemFolder     = "../BEMscripts/";
+const cl            = require(`${bemFolder}classes.js`);
 
 let testBem = {
   blocksArr: [
@@ -7,7 +8,7 @@ let testBem = {
       title: 'block1',
     }, 
     {
-      title: 'block2'
+      title: 'block2',
       elements: [
         {title: "__element-1"},
         {title: "__element-2"},
@@ -15,7 +16,7 @@ let testBem = {
       ]
     }, 
     {
-      title: 'block3'
+      title: 'block3',
       modifications: [
         {title: "_modification-1"},
         {title: "_modification-2"},
@@ -23,7 +24,7 @@ let testBem = {
       ]
     }, 
     {
-      title: 'block4'
+      title: 'block4',
       elements: [
         {title: "__element-1"},
         {title: "__element-2"},
@@ -38,7 +39,12 @@ let testBem = {
   ],//Массив строк, в каждой строке название блока
   showEntities : require(bemFolder + '_showEntities.js')
 }
-
-tests.forEach((item,index) =>{
-  console.log(`(${index}) showEntities(${JSON.stringify(item)}) = ${testBem.showEntities(item)} (${index})`);
-})
+let testBlock         = new cl.Block(`BlockTest`,[{title: '__tostElement1'},{title: '__tostElement2'}], [{title: '_tostModification1'},{title: '_tostModification2'}]);
+let testElement       = new cl.Element(`ElementTest`,[{title: '_tostModification1'},{title: '_tostModification2'}]);
+let testModification  = new cl.Modification(`ModificationTest`);
+console.log(`show entities from testBem`);
+testBem.showEntities();
+console.log(`show entities from test block`);
+testBlock.showEntities();
+console.log(`show entities from test element`);
+testElement.showEntities();

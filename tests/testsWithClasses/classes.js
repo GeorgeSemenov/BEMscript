@@ -10,6 +10,8 @@ function Dog(name) {
     this.bark = function(){
       console.log(`Dog ${name} spelled Gav Gav`);
     }
+    this.blocksArr = [1,2,3];
+    this.showEntities = require(`${__dirname}/_showEntities.js`);
 }
 module.exports = {
   Cat : Cat,
