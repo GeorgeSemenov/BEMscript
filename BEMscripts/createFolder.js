@@ -1,6 +1,6 @@
 const fs = require('fs');
-const createFolder = function (folder){
-  fs.mkdirSync(folder);  
+const createFolder = function (destination='./',folder){
+  fs.mkdirSync(`${destination}\\${folder}`);  
   // console.log("hello folder " + folder);
   // let pathArr = folder.split('/');
   // let directoriesArr = [];//Пустой архив директорий, которые уже прошёл node см ниже  

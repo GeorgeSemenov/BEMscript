@@ -6,7 +6,7 @@ class BEMEntity{
   constructor(title){
     this.title = title;
   }
-  showEntities(){}//Пусть этот метод будет, переопределим его потом.
+  showEntities(){console.log(`>>>>>>>>>>>>>>>>>>>>>\nMethod showEntities is unredefineded.\n>>>>>>>>>>>>>>>>>>>>>`);}//Пусть этот метод будет, переопределим его потом.
 }
 
 class BEMBD extends BEMEntity {
@@ -19,7 +19,7 @@ class BEMBD extends BEMEntity {
 
   init                  = require(bemFolder + '_init.js');//Под инициацией понимается инициализацию массива объектов блоков(это массив экземпляров класса Block), в папке которая прописана в переменной destination, эти сущности будут складываться в массив blocksArr и каждый будет хранить массивы объектов элементов и массива объектов модификаторов. Массив объектов элементов, будет хранить массив модификаторов.
   ask                   = require(bemFolder + '_ask.js');//Спрашиваем - что быдем создавать
-  create                = require(bemFolder + '_create.js');//Создаём БЭМ сущность с именем = this.currentBEM
+  create                = require(bemFolder + '_create.js');//Создаём БЭМ сущность(папка с назнванием и scss файли и pug файл при необоходимости) с именем полученным от метода ask(), также вносятся необохдимые изменения в массивы blocksArr и другие, если необохдимо
   logToDatabase         = require(bemFolder + '_logToDatabase.js');//Записывает данные в файл базы данных
   logFromDatabase       = require(bemFolder + '_logfromDatabase.js');//Считывает данные с файла базы данных
   showEntities          = showEntetiesForAllBEMEntities.showEntetiesForBEMBD;
@@ -42,7 +42,9 @@ class Element extends BEMEntity{
   }
   showEntities         = showEntetiesForAllBEMEntities.showEntetiesForElement
 }
-class Modification extends BEMEntity {};
+class Modification extends BEMEntity {
+  showEntities(){};//Переопределяем метод, чтобы не выходил сообщение, о том, что метод не переопределён
+};
 
 module.exports = {
   BEMBD        : BEMBD,

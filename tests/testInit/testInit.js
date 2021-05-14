@@ -1,5 +1,4 @@
 const bemFolder     = "../../BEMscripts/";
-const getFolders    = require(bemFolder + 'getFolders.js')
 
 let testBem = {
   blocksArr: [],//Массив строк, в каждой строке название блока
@@ -10,6 +9,14 @@ let testBem = {
 
 testBem.init();
 testBem.blocksArr.forEach((block)=>{
-  console.log(JSON.stringify(block));
+  console.log(`block.title : ${block.title}`);
+  console.log(`\n>>elements: `);
+  block.elements.forEach(element=>{
+    console.log(`>>>>${JSON.stringify(element)}`);
+  })
+  console.log(`\n>>modifications: `);
+  block.modifications.forEach(modification=>{
+    console.log(`>>>>${JSON.stringify(modification)}`);
+  })
   console.log(`---------------------------------------------`);
 })
