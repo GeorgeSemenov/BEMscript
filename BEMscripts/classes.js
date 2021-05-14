@@ -28,17 +28,19 @@ class BEMBD extends BEMEntity {
 };
 
 class Block extends BEMEntity{
-  constructor (title= 'no block title', elements=[], modifications =[]) { 
+  constructor (title= 'no block title', elements=[], modifications =[],variables=[]) { 
     super(title);
     this.elements      = elements;
     this.modifications = modifications;
+    this.variables     = variables;
   }
   showEntities         = showEntetiesForAllBEMEntities.showEntetiesForBlock
 }
 class Element extends BEMEntity{
-  constructor(title= 'no element title', modifications =[]) { 
+  constructor(title= 'no element title', modifications =[],variables=[]) { 
     super(title);
     this.modifications = modifications;
+    this.variables     = variables;
   }
   showEntities         = showEntetiesForAllBEMEntities.showEntetiesForElement
 }

@@ -1,11 +1,10 @@
 const bemFolder     = "../../BEMscripts/";
+const  findeVariables = require(bemFolder + 'findePugVariables.js');
 
 let testBD = {
-  destination : __dirname,
-  findeVariables : require(bemFolder + '_findePugVariables.js'),
+  destination : __dirname
 }
 
-console.log(`test begin`);
 
 // let str = 'lo lo lo hhh';
 // let lasPosition = 0;
@@ -15,4 +14,5 @@ console.log(`test begin`);
 //   lasPosition ++ ;
 // }while (lasPosition != 0)
 
-console.log(testBD.findeVariables('fen'));
+console.log(`test begin`);
+console.log(findeVariables(testBD.destination + '\\fen\\fen.pug'));
