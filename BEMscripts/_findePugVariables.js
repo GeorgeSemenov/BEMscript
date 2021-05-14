@@ -13,6 +13,10 @@ const func = function (fileName){
     }
     let isNeedToContinue = false;
     let variableNameFirstSymbolPosition = 0;
+    let variableNameLastSymbolPosition = 0;
+    let variableDefValueFirstSymbolPosition = 0;
+    let variableDefValueLastSymbolPosition = 0;
+    let count = 0;
     do{
       isNeedToContinue = false;
       variableNameFirstSymbolPosition = //Тут указанно, что нужно искать  первый символ имени переменной после предыдущего нахождения символа, чтобы функция не находила постоянно один и тот же символ.
@@ -21,7 +25,7 @@ const func = function (fileName){
           variableNameFirstSymbolPosition) + 
         v.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE.length;
 
-      let variableNameLastSymbolPosition = 
+      variableNameLastSymbolPosition = 
         dataFromFile.indexOf(v.SYMBOLS_AFTER_NAME_OF_PUG_VARIABLE,
           variableNameFirstSymbolPosition);
 
@@ -29,23 +33,20 @@ const func = function (fileName){
         variableNameFirstSymbolPosition,
         variableNameLastSymbolPosition);
 
-      let variableDefValueFirstSymbolPosition = 
+      variableDefValueFirstSymbolPosition = 
         dataFromFile
         .indexOf(v.SYMBOLS_BEFORE_DEFVALUE_OF_PUG_VARIABLE,variableNameFirstSymbolPosition)
         + v.SYMBOLS_BEFORE_DEFVALUE_OF_PUG_VARIABLE.length;
 
-      let variableDefValueLastSymbolPosition = dataFromFile.indexOf(
+      variableDefValueLastSymbolPosition = dataFromFile.indexOf(
         v.SYMBOLS_AFTER_DEFVALUE_OF_PUG_VARIABLE, variableDefValueFirstSymbolPosition);
 
       let defaultVariableValue = dataFromFile.
         slice(variableDefValueFirstSymbolPosition,variableDefValueLastSymbolPosition)
-      if (
-        (variableNameFirstSymbolPosition != -1) &&
-        (variableNameLastSymbolPosition != -1) &&
-        (variableDefValueFirstSymbolPosition != -1) &&
-        (variableDefValueLastSymbolPosition != -1)
-      ){
-        variableNameFirstSymbolPosition ++ ;
+      if (variableNameFirstSymbolPosition !=     
+          (v.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE.length -1))
+      {
+        variableNameFirstSymbolPosition = variableDefValueLastSymbolPosition;
         variables.push({
           name : nameOfVariable,
           defValue : defaultVariableValue

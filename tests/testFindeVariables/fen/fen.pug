@@ -1,4 +1,6 @@
 mixin fen(modifier)
   if modifier["text"] == undefined
     - modifier["text"] = "empty__text";
+  if modifier["another variable"] == undefined
+    - modifier["another variable"] = "another defValue";
   p.fen
