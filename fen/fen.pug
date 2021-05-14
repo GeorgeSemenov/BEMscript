@@ -1,2 +1,6 @@
 mixin fen(modifier)
-  
+  if modifier["text"] == undefined
+    - modifier["text"] = "empty__text";
+  if modifier["jorp"] == undefined
+  - modifier["jorp"] = "defaultJorp";
+  p.fen

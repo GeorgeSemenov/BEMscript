@@ -4,40 +4,26 @@
   Если при считывании возникла ошибка - возвращает пустую строку
 */
 const fs = require('fs');
-const readFromFile = function(file="**^dummyFile**^^^", msg="empty message"){
-  let canIReadFromFile = true;
-  let readedData = "";
+const readFromFile = function(file){
+  let readedData;
   try{
-    if (file == "**^dummyFile**^^^"){
-      throw new Error("\n\n>>>>>>>>>>>\nfile name undefined.\nReading imposibru\n>>>>>>>>>>>\n\n");
-    }
+    readedData = fs.readFileSync(file, 'utf8' , function(err,data) {
+      if(err) {
+        console.log('\n\n-----------Error in readFromFile function-----------\n');
+        console.log(err);
+      }
+      else{
+        return data;
+      }
+    }); 
   }
   catch(err){
+    if(err.errno == (-4058) ){//Если файла нет, возвращает (-1)
+      return -1;
+    }
+    console.log('\n\n-----------Error in readFromFile function description beginning-----------\n');
     console.log(err);
-    canIReadFromFile = false;
-  }
-  if (canIReadFromFile){
-    try{
-      readedData = fs.readFileSync(file, 'utf8' , function(err,data) {
-        if(err) {
-          console.log('\n\n-----------Error description beginning-----------\n');
-          console.log(err);
-          console.log('\n-----------Error description end-----------\n\n')
-          return "";
-        }
-        else{
-          return data;
-        }
-      }); 
-    }
-    catch(err){
-      if(err.errno == (-4058) ){
-        return -1;
-      }
-      console.log('\n\n-----------Error description beginning-----------\n');
-      console.log(err);
-      console.log('\n-----------Error description end-----------\n\n')
-    }
+    console.log('\n-----------Error description end-----------\n\n')
   }
   return readedData;
 }
