@@ -13,10 +13,13 @@ module.exports = {
     showArrayBemEnteties(this.blocksArr);
   },
   showEntetiesForBlock(){
-    showArrayBemEnteties(this.elements);
-    showArrayBemEnteties(this.modifications, true);
+    showArrayBemEnteties(this.elements,v.SHOW_ENTITIES_PRE_SYMBOLS);
+    showArrayBemEnteties(this.modifications,
+      v.SHOW_ENTITIES_PRE_SYMBOLS, true);
   },
   showEntetiesForElement(){
-    showArrayBemEnteties(this.modifications,true);
-  }
+    showArrayBemEnteties(
+      this.modifications,v.SHOW_MODIFICATIONS_PRE_SYMBOLS, true);
+  },
+  showEntetiesForModification(){}//Модификатору нечего показывать
 }

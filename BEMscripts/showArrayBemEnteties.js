@@ -1,10 +1,10 @@
-function showArray(arr=[],isWithoutIndex=false){
+function showArray(arr=[],preSymbols = '',isWithoutIndex=false){
   arr.forEach(function(item, index){
     if (item !=undefined){
       if(isWithoutIndex)
-        console.log(`  ${item.title}`); 
+        console.log(`${preSymbols}  ${item.title}`); 
       else
-        console.log(`${index + 1} ${item.title}`); 
+        console.log(`${preSymbols}${index + 1} ${item.title}`); 
     }
   })
 }

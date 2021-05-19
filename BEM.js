@@ -9,7 +9,7 @@ const readFromFile  = require(bemFolder + 'readFromFile.js');
 const getFolders    = require(bemFolder + 'getFolders.js');//возвращает имена папок находящихся в директории, откуда вызывается эта функция, если функцию вызывает BEМ.js то вернётся массив папок находящихся в папке с этим файлом
 const isElement     = require(bemFolder + 'isElement.js');
 const isModifier    = require(bemFolder + 'isModifier.js');
-const ask           = require(bemFolder + '_ask.js');//Спрашиваем - что быдем создавать
+const ask           = require(bemFolder + 'ask.js');//Спрашиваем - что быдем создавать
 
 /* ---- Переменные и классы---- */
 

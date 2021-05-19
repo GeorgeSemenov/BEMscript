@@ -1,5 +1,6 @@
 const showArrayBemEnteties = require('./showArrayBemEnteties');
 const showEntetiesForAllBEMEntities = require('./_showEntities');
+const handleAnswerForAllBEMEntities = require(`./_handleAnswer`)
 let bemFolder = './';
 
 class BEMEntity{
@@ -7,6 +8,7 @@ class BEMEntity{
     this.title = title;
   }
   showEntities(){console.log(`>>>>>>>>>>>>>>>>>>>>>\nMethod showEntities is unredefineded.\n>>>>>>>>>>>>>>>>>>>>>`);}//Пусть этот метод будет, переопределим его потом.
+  handleAnswer(){console.log(`>>>>>>>>>>>>>>>>>>>>>\nMethod handleAnswer is unredefineded.\n>>>>>>>>>>>>>>>>>>>>>`);}//Пусть этот метод будет, переопределим его потом.
 }
 
 class BEMBD extends BEMEntity {
@@ -23,7 +25,7 @@ class BEMBD extends BEMEntity {
   logFromDatabase       = require(bemFolder + '_logfromDatabase.js');//Считывает данные с файла базы данных
   showEntities          = showEntetiesForAllBEMEntities.showEntetiesForBEMBD;
   chooseBlock           = require(bemFolder + '_chooseBlock.js');//выбирает блок
-  handleAnswer          = require(bemFolder + '_handleAnswer.js');
+  handleAnswer          = handleAnswerForAllBEMEntities.handleAnswerForBEMBD;
 };
 
 class Block extends BEMEntity{
@@ -33,7 +35,8 @@ class Block extends BEMEntity{
     this.modifications = modifications;
     this.variables     = variables;
   }
-  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForBlock
+  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForBlock;
+  handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForBlock;
 }
 class Element extends BEMEntity{
   constructor(title= 'no element title', modifications =[],variables=[]) { 
@@ -41,10 +44,12 @@ class Element extends BEMEntity{
     this.modifications = modifications;
     this.variables     = variables;
   }
-  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForElement
+  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForElement;
+  handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForElement;
 }
 class Modification extends BEMEntity {
-  showEntities(){};//Переопределяем метод, чтобы не выходил сообщение, о том, что метод не переопределён
+  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForModification;//Переопределяем метод, чтобы не выходил сообщение, о том, что метод не переопределён
+  handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForModification;
 };
 
 module.exports = {
