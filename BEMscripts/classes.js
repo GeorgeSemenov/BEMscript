@@ -1,12 +1,14 @@
 const showArrayBemEnteties = require('./showArrayBemEnteties');
 const showEntetiesForAllBEMEntities = require('./_showEntities');
-const handleAnswerForAllBEMEntities = require(`./_handleAnswer`)
+const handleAnswerForAllBEMEntities = require(`./_handleAnswer`);
+const createForAllBEMEntities = require(`./_create`);
 let bemFolder = './';
 
 class BEMEntity{
   constructor(title){
     this.title = title;
   }
+  create(){console.log(`>>>>>>>>>>>>>>>>>>>>>\nMethod create is unredefineded.\n>>>>>>>>>>>>>>>>>>>>>`);}//Пусть этот метод будет, переопределим его потом.
   showEntities(){console.log(`>>>>>>>>>>>>>>>>>>>>>\nMethod showEntities is unredefineded.\n>>>>>>>>>>>>>>>>>>>>>`);}//Пусть этот метод будет, переопределим его потом.
   handleAnswer(){console.log(`>>>>>>>>>>>>>>>>>>>>>\nMethod handleAnswer is unredefineded.\n>>>>>>>>>>>>>>>>>>>>>`);}//Пусть этот метод будет, переопределим его потом.
 }
@@ -20,7 +22,7 @@ class BEMBD extends BEMEntity {
   }
 
   init                  = require(bemFolder + '_init.js');//Под инициацией понимается инициализацию массива объектов блоков(это массив экземпляров класса Block), в папке которая прописана в переменной destination, эти сущности будут складываться в массив blocksArr и каждый будет хранить массивы объектов элементов и массива объектов модификаторов. Массив объектов элементов, будет хранить массив модификаторов.
-  create                = require(bemFolder + '_create.js');//Создаём БЭМ сущность(папка с назнванием и scss файли и pug файл при необоходимости) с именем полученным от метода ask(), также вносятся необохдимые изменения в массивы blocksArr и другие, если необохдимо
+  create                = createForAllBEMEntities.createForBEMBD;//Создаём БЭМ сущность(папка с назнванием и scss файли и pug файл при необоходимости) с именем полученным от метода ask(), также вносятся необохдимые изменения в массивы blocksArr и другие, если необохдимо
   logToDatabase         = require(bemFolder + '_logToDatabase.js');//Записывает данные в файл базы данных
   logFromDatabase       = require(bemFolder + '_logfromDatabase.js');//Считывает данные с файла базы данных
   showEntities          = showEntetiesForAllBEMEntities.showEntetiesForBEMBD;
@@ -35,19 +37,28 @@ class Block extends BEMEntity{
     this.modifications = modifications;
     this.variables     = variables;
   }
+  create               = createForAllBEMEntities.createForBlock;
   showEntities         = showEntetiesForAllBEMEntities.showEntetiesForBlock;
   handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForBlock;
 }
 class Element extends BEMEntity{
-  constructor(title= 'no element title', modifications =[],variables=[]) { 
+  constructor(title= 'no element title', modifications =[],variables=[], parentName='') { 
     super(title);
     this.modifications = modifications;
     this.variables     = variables;
+    this.parentName    = parentName;
   }
+  create               = createForAllBEMEntities.createForElement;
   showEntities         = showEntetiesForAllBEMEntities.showEntetiesForElement;
   handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForElement;
 }
 class Modification extends BEMEntity {
+  constructor (title=`no modification title`,parentName='', grandParentName = ''){
+    super(title);
+    this.parentName    = parentName;
+    this.grandParentName= grandParentName;
+  }
+  create               = createForAllBEMEntities.createForModification;
   showEntities         = showEntetiesForAllBEMEntities.showEntetiesForModification;//Переопределяем метод, чтобы не выходил сообщение, о том, что метод не переопределён
   handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForModification;
 };

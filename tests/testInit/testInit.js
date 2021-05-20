@@ -9,7 +9,7 @@ let testBem = {
 
 testBem.init();
 testBem.blocksArr.forEach((block)=>{
-  console.log(`block.title : ${block.title}`);
+  console.log(`block.title : ${block.title}\nblock.destination : ${block.destination}`);
   console.log(`\n>>elements: `);
   block.elements.forEach(element=>{
     console.log(`>>>>${JSON.stringify(element)}`);

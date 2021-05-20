@@ -22,13 +22,26 @@ const _init = function (){//Получаем первичные данные amo
     let destination = this.destination;
     this.blocksArr = createAndFilterAndMapArray ({path: destination, condition: (()=>{return true}), klass: cl.Block});
     this.blocksArr.forEach(block=>{
-      block.elements = createAndFilterAndMapArray({path: `${destination}\\${block.title}`, condition: isElement, klass: cl.Element});
+      block.destination = `${destination}/${block.title}`;
+      block.elements = createAndFilterAndMapArray(
+        {path: `${block.destination}`, condition: isElement, klass: cl.Element});
       block.elements.forEach(element=>{
-        element.modifications = createAndFilterAndMapArray({path: `${destination}\\${block.title}\\${element.title}`, condition: isModifier, klass: cl.Modification});
-        element.variables = findePugVariables(`${destination}\\${block.title}\\${element.title}\\${block.title}${element.title}.pug`);
-        // console.log(`${destination}\\${block.title}\\${element.title}\\${block.title}${element.title}.pug`);
+        element.destination = `${block.destination}/${element.title}`;
+        element.modifications = createAndFilterAndMapArray(
+          {path: element.destination, condition: isModifier, klass: cl.Modification});
+        element.parentName = block.title;
+        element.modifications.forEach(modification => {
+          modification.destination = `${element.modification}/${modification.title}`;
+          modification.parentName = element.title;
+          modification.grandParentName = block.title;
+        })
+// поиск пока не нужен        // element.variables = findePugVariables(`${destination}\\${block.title}\\${element.title}\\${block.title}${element.title}.pug`);
       })
-      block.modifications = createAndFilterAndMapArray({path: `${destination}\\${block.title}`, condition: isModifier, klass: cl.Modification});
+      block.modifications = createAndFilterAndMapArray({path: block.destination, condition: isModifier, klass: cl.Modification});
+      block.modifications.forEach(modification => {
+        modification.parentName = block.title;
+        modification.destination = `${block.destination}/${modification.title}`
+      })
     })
   }catch(err){
     console.log(`>>>>>\nError in module init\n\n${err}`);
