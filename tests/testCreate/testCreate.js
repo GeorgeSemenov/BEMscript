@@ -8,7 +8,7 @@ let testBEMBD = {
     {title: "blockNaoborot"},
     {title: "blockNaoborot2"}
   ],
-  create: require(bemFolder+'_create.js'),
+  create: (require(bemFolder+'_create.js').createForBEMBD),
   destination: __dirname
 }
 
