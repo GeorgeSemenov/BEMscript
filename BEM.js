@@ -4,7 +4,6 @@ const readline = require('readline-sync');
 /* ---- Самодельные функшины ---- */
 const bemFolder     = ('./BEMscripts/');
 const createFolder  = require(bemFolder + 'createFolder.js');
-const writeToFile   = require(bemFolder + 'writeToFile.js');
 const readFromFile  = require(bemFolder + 'readFromFile.js');
 const getFolders    = require(bemFolder + 'getFolders.js');//возвращает имена папок находящихся в директории, откуда вызывается эта функция, если функцию вызывает BEМ.js то вернётся массив папок находящихся в папке с этим файлом
 const isElement     = require(bemFolder + 'isElement.js');

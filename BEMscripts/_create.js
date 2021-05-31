@@ -1,3 +1,4 @@
+const path          = require('path');
 const fs            = require('fs');
 const ask           = require(`./ask.js`);
 const createFolder  = require('./createFolder.js');
@@ -5,13 +6,18 @@ const writeToFile   = require('./writeToFile.js');
 const cl            = require('./classes.js');
 const isElement     = require('./isElement.js');
 const isModifier    = require('./isModifier.js');
+
 module.exports = {
+  import obj from './classes';
   createForBEMBD(bemEntity){
     let isNeedToCreate = true;
     this.blocksArr.forEach(block=>{//проверка на наличие блока с таким именем в массиве блоков
       isNeedToCreate = (block.title == bemEntity)? false: isNeedToCreate;
     })
-    let file = `${this.destination}/${bemEntity}/${bemEntity}`;
+    // let file = `${this.destination}/${bemEntity}/${bemEntity}`;
+    //Вначале попробовал указать путь, как в верху указанно, но в windows разделителем
+    //Директорий является \, а в ubuntu / Пришлось искать универсальный путь, используя path
+    let file = path.join(this.destination, bemEntity, bemEntity);
     let pugFile = `${file}.pug`;
     let scssFile = `${file}.scss`;
     let defaultPugVariablesText = `if modifier == undefined\n    - modifier = {}\n    `;
@@ -20,16 +26,19 @@ module.exports = {
 
     if(isNeedToCreate){
       try {
-        console.log(`destination = ${this.destination}`);
-        createFolder(this.destination,`${bemEntity}`)
-        writeToFile(this.destination, pugFile, pugFileText)
-        writeToFile(this.destination, scssFile, scssFileText);
-    
-        this.blocksArr.push(new cl.Block(bemEntity));
+        createFolder(this.destination,bemEntity);
+        writeToFile(pugFile, pugFileText);
+        writeToFile(scssFile, scssFileText);
+        this.blocksArr.push( new obj.Block(bemEntity) );
       }
-      catch(err){console.log(`>>>>>>>>>>>\nerror in create module\n\n${err}\n>>>>>>>>>>>`);}
+      catch(err){
+        if (err.errno == (-4075) )
+          console.log(`---error in create module\n---${bemEntity} file already exists in folder\n`);
+        else
+          console.log(`---error in create module\n---${err}\n${JSON.stringify(err)}\n`);
+      }
     }else
-      console.log(`>>>>>>>>>>>>>>>>\nblock named "${bemEntity}" is already exist, so stop it baby.`);
+      console.log(`---error in create module\n---block named "${bemEntity}" is already exist in array blocksArr, so stop it baby.\n`);
     },
     createForBlock(bemEntity){
       let isNeedToCreate = true;
