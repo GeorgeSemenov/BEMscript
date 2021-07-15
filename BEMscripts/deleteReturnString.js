@@ -1,6 +1,6 @@
 //Функция принимает переменную с несколькими строками 
 //и удаляет строку начиная с firstChar и заканчивая lastChar
-// или, если указан параметр return: true, данная строка не удаляется, а возвращяется
+// или, если указан параметр retrunDeletedString: true, данная строка не удаляется, а возвращяется
 //по умолчанию firstChar = первый символ, lastChar- последний символ файла
 //isNeedToDeleteKaretka - отвечает за перенос на следующую строку
 //Принимаемый объект{str,firstChar=0,lastChar='\n', isNeedToDeleteKaretka=true,retrunDeletedString= false}
@@ -16,10 +16,10 @@ const func = function (obj){
   if (obj.lastChar == '\n' && obj.isNeedToDeleteKaretka)  obj.secondPlace++;
   let deletedSubstring = obj.str.substring(obj.firstPlace,obj.secondPlace);
 
-  if (!obj.retrunDeletedString)
-    return obj.str.replace(deletedSubstring,'');
-  else
+  if (obj.retrunDeletedString)
     return deletedSubstring
+  else
+    return obj.str.replace(deletedSubstring,'');
 };
 
 module.exports = func;

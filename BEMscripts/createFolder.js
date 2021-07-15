@@ -1,6 +1,14 @@
 const fs = require('fs');
-const createFolder = function (destination='./',folder){
-  fs.mkdirSync(`${destination}/${folder}`);  
+const createFolder = function (folder,destination='./'){
+  try {
+    fs.mkdirSync(`${destination}/${folder}`);  
+  }catch(err){
+    if(err.errno == -4075){
+      console.log(`folder ${folder} already exist, this is good.`);
+    }else{
+      throw(err); 
+    }
+  }
   // console.log("hello folder " + folder);
   // let pathArr = folder.split('/');
   // let directoriesArr = [];//Пустой архив директорий, которые уже прошёл node см ниже  

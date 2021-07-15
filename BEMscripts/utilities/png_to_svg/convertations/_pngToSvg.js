@@ -1,18 +1,16 @@
 const fs              = require('fs');
 const potrace         = require('potrace');
-const beforeFolder    = ('../before/');
-const afterFolder     = ('../after/');
 const bemFolder       = ('../../../');
-const dts             = require(`${bemFolder}deleteReturnString.js`);
-const func = function (file){
-  potrace.trace(`${beforeFolder}${file}`, function(err, svg) {
+const getName         = require(`${bemFolder}getFileName.js`);
+const wtf             = require(bemFolder + 'writeToFile.js');
+
+// {file, afterFolder, beforeFoler}
+const func = function (obj){
+  if(obj.afterFolder == undefined) obj.afterFolder = './after/';
+  if(obj.beforeFolder == undefined) obj.beforeFolder = './before/';
+  potrace.trace(`${obj.beforeFolder}${obj.file}`, function(err, svg) {
     if (err) throw err;
-    outputName = dts({
-      str: file,
-      lastChar: '.',
-      retrunDeletedString: true
-    })
-    fs.writeFileSync(`${afterFolder}${outputName}.svg`, svg);
+    wtf(`${obj.afterFolder}${getName(obj.file)}.svg`, svg);
   });
 }
 module.exports = func;
