@@ -13,4 +13,5 @@ const func = function (obj){
     wtf(`${obj.afterFolder}${getName(obj.file)}.svg`, svg);
   });
 }
+
 module.exports = func;

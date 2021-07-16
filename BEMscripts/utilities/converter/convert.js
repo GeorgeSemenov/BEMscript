@@ -2,6 +2,7 @@
 //Не забудь установить npm install potrace
 const beforeFolder    = ('./before/');
 const afterFolder     = ('./after/');
+const tempFolder      = './tempFolder/';
 const bemFolder       = ('../../');
 const convertFolder   = ('./convertations/');
 const potrace         = require('potrace');
@@ -20,21 +21,29 @@ let files = gf(beforeFolder);
 cf(afterFolder);
 if(typeOfConvertation == 1) {sorting(files,stp);}//Ковертируемс svg в pug(c миксиной)
 else if(typeOfConvertation == 2) {//Ковертируемс png в pug(c миксиной)
-  sorting(files,pts,{afterFolder:tempPNGToSVG});
-  sorting(files,stp,{beforeFolder:tempPNGToSVG});
+  cf(tempFolder)
+  sorting(files,pts,{afterFolder:tempFolder});
+  setTimeout(
+    ()=>{
+      files = gf(tempFolder)
+      sorting(files,stp,{beforeFolder:tempFolder})
+      setTimeout(()=>{
+        fs.rmdirSync(tempFolder, { recursive: true })
+      },5000)
+    }, 7500,);
 }
 else if(typeOfConvertation == 3) {sorting(files,pts);} //Конвертируем png в svg
 else{ `Nothing to convert.`}
 
-async function sorting(arr,func,destination={afterFolder: afterFolder, beforeFolder: beforeFolder}){
+function sorting(arr,func,destination={afterFolder: afterFolder, beforeFolder: beforeFolder}){
   if (destination.afterFolder == undefined) destination.afterFolder = afterFolder;
   if (destination.beforeFolder == undefined) destination.beforeFolder = beforeFolder;
-  arr.forEach((item, index)=>{
+  arr.forEach(function(item, index){
+    console.log(`${index+1}/${arr.length}) file ${item} converted`)
     func({
       file: item,
       afterFolder: destination.afterFolder,
       beforeFolder: destination.beforeFolder
     });
-    console.log(`${index+1}/${arr.length}) file ${item} converted`)
   })
 }

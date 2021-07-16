@@ -12,6 +12,7 @@ const func = function (obj){
   if(obj.afterFolder == undefined) obj.afterFolder = './after/';
   if(obj.beforeFolder == undefined) obj.beforeFolder = './before/';
   let html = rff(`${obj.beforeFolder}${obj.file}`);
+  if (html == -1){console.log(`!!!\nfile ${obj.beforeFolder}${obj.file} not found.\n!!!`);}
   let pug = h2p(html);
   pug = drs({/*Убираем всё что не касается svg (head title etc...)*/
     str : pug,
