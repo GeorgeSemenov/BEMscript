@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "html2pug": "^4.0.0",
+    "png-to-svg": "^1.0.5",
+    "potrace": "^2.1.8",
+    "readline-sync": "^1.4.10"
+  }
+}
