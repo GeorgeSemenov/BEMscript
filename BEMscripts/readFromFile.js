@@ -9,7 +9,7 @@ const readFromFile = function(file){
   try{
     readedData = fs.readFileSync(file, 'utf8' , function(err,data) {
       if(err) {
-        console.log('\n\n-----------Error in readFromFile function-----------\n');
+        console.log('\n\n-----------Error in readFromFile calback function-----------\n');
         console.log(err);
       }
       else{

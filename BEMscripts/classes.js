@@ -1,3 +1,4 @@
+//Содержит классы которые используются в методах и фукнциях
 const showArrayBemEnteties = require('./showArrayBemEnteties');
 const showEntetiesForAllBEMEntities = require('./_showEntities');
 const handleAnswerForAllBEMEntities = require(`./_handleAnswer`);
@@ -16,9 +17,9 @@ class BEMEntity{
 class BEMBD extends BEMEntity {
   constructor(title=`BEMBD`){
     super(title);
-    this.amountOfBlocks  = 0;//Сколько всего блоков
-    this.blocksArr       = [1,2,3];//Массив строк, в каждой строке название блока
-    this.destination     = './';// переменная, которая указывает на место, где был вызван bem.js в данном случае он берёт своё значение в корневой папке
+    this.amountOfBlocks = 0;//Сколько всего блоков
+    this.blocksArr      = [1,2,3];//Массив строк, в каждой строке название блока
+    this.destination    = __dirname;// переменная, которая указывает на место, где был вызван bem.js в данном случае он берёт своё значение в корневой папке
   };
 
   init                  = require(bemFolder + '_init.js');//Под инициацией понимается инициализацию массива объектов блоков(это массив экземпляров класса Block), в папке которая прописана в переменной destination, эти сущности будут складываться в массив blocksArr и каждый будет хранить массивы объектов элементов и массива объектов модификаторов. Массив объектов элементов, будет хранить массив модификаторов.

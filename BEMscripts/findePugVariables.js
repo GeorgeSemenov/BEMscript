@@ -1,5 +1,8 @@
+//Принимает pug файл и ищет в нём переменные 
+//Возвращает массив переменных.
+//Проверь в будущем, стоит ли добавить проверку, является ли этот файл pug файлом.
 const readFromFile = require('./readFromFile.js');
-const v = require('./variables.js');
+const co = require('./constants.js');
 const func = function (fileName){
   let variables = [];
   if (fileName == undefined){
@@ -10,7 +13,7 @@ const func = function (fileName){
     catch(err){
       console.log(`---------error in findePugVariable--------------\n${err}`);
     }
-    if (dataFromFile != -1) {
+    if (dataFromFile != -1) {//Если файл есть
       let isNeedToContinue = false;
       let variableNameFirstSymbolPosition = 0;
       let variableNameLastSymbolPosition = 0;
@@ -21,12 +24,12 @@ const func = function (fileName){
         isNeedToContinue = false;
         variableNameFirstSymbolPosition = //Тут указанно, что нужно искать  первый символ имени переменной после предыдущего нахождения символа, чтобы функция не находила постоянно один и тот же символ.
           dataFromFile.indexOf(
-            v.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE,
+            co.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE,
             variableNameFirstSymbolPosition) + 
-          v.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE.length;
+          co.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE.length;
 
         variableNameLastSymbolPosition = 
-          dataFromFile.indexOf(v.SYMBOLS_AFTER_NAME_OF_PUG_VARIABLE,
+          dataFromFile.indexOf(co.SYMBOLS_AFTER_NAME_OF_PUG_VARIABLE,
             variableNameFirstSymbolPosition);
 
         let nameOfVariable = dataFromFile.slice(
@@ -35,16 +38,16 @@ const func = function (fileName){
 
         variableDefValueFirstSymbolPosition = 
           dataFromFile
-          .indexOf(v.SYMBOLS_BEFORE_DEFVALUE_OF_PUG_VARIABLE,variableNameFirstSymbolPosition)
-          + v.SYMBOLS_BEFORE_DEFVALUE_OF_PUG_VARIABLE.length;
+          .indexOf(co.SYMBOLS_BEFORE_DEFVALUE_OF_PUG_VARIABLE,variableNameFirstSymbolPosition)
+          + co.SYMBOLS_BEFORE_DEFVALUE_OF_PUG_VARIABLE.length;
 
         variableDefValueLastSymbolPosition = dataFromFile.indexOf(
-          v.SYMBOLS_AFTER_DEFVALUE_OF_PUG_VARIABLE, variableDefValueFirstSymbolPosition);
+          co.SYMBOLS_AFTER_DEFVALUE_OF_PUG_VARIABLE, variableDefValueFirstSymbolPosition);
 
         let defaultVariableValue = dataFromFile.
           slice(variableDefValueFirstSymbolPosition,variableDefValueLastSymbolPosition)
         if (variableNameFirstSymbolPosition !=     
-            (v.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE.length -1))
+            (co.SYMBOLS_BEFORE_NAME_OF_PUG_VARIABLE.length -1))
         {
           variableNameFirstSymbolPosition = variableDefValueLastSymbolPosition;
           variables.push({

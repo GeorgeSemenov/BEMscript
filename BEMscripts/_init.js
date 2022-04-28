@@ -1,11 +1,14 @@
-const fs                = require('fs');
-const v                 = require('./variables.js');
-const cl                = require('./classes.js');
-const isElement         = require('./isElement.js');
-const isModifier        = require('./isModifier.js');
-const getFolders        = require('./getFolders.js');//возвращает имена папок находящихся в директории, откуда вызывается эта функция, если функцию вызывает BEМ.js то вернётся массив папок находящихся в папке с этим файлом
-const findePugVariables = require('./findePugVariables.js')
+//
 
+const fs                = require('fs');
+const cl                = require(`${__dirname}/classes.js`);
+const isElement         = require(`${__dirname}/isElement.js`);
+const isModifier        = require(`${__dirname}/isModifier.js`);
+const getFolders        = require(`${__dirname}/getFolders.js`);//возвращает имена папок находящихся в директории, откуда вызывается эта функция, если функцию вызывает BEМ.js то вернётся массив папок находящихся в папке с этим файлом
+const findePugVariables = require(`${__dirname}/findePugVariables.js`)//Принимает имя файла - возвращает массив переменных
+
+//функция ниже принимает управляющий объект, который содержит 
+//расположение БЭМ сущности, функцию сравнения (condition) и тип бэм СУЩНОСТИ
 function createAndFilterAndMapArray(ruleObj){
   let resultedArr = getFolders(ruleObj.path).map((item) => {
     if (ruleObj.condition(item))

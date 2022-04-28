@@ -1,9 +1,12 @@
+//возвращает имена папок находящихся в директории, откуда вызывается эта функция, 
+//если функцию вызывает BEМ.js то вернётся массив папок находящихся в папке с этим файлом
+//Если задать isDevMode=true то будет возвращать сообщения, например, что в указанной папке не директорий.
 const fs = require('fs');
 
 const func = function (currentFolder=__dirname, isDevMode = false){
   let folders;
   try{
-    folders = fs.readdirSync(currentFolder).filter((file,index) => {
+    folders = fs.readdirSync(currentFolder).filter((file,index) => { //readdirSync(folder) - считывает информацию из folder , filter - возвращает новый массив с элементами, для которых калбэк вернёт тру
       if (fs.lstatSync(`${currentFolder}/${file}`).isDirectory() )
         return file
     });
