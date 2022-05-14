@@ -3,7 +3,7 @@
 const fs                = require('fs');
 const cl                = require(`${__dirname}/classes.js`);
 const isElement         = require(`${__dirname}/isElement.js`);
-const isModifier        = require(`${__dirname}/isModifier.js`);
+const isModificator     = require(`${__dirname}/isModificator.js`);
 const getFolders        = require(`${__dirname}/getFolders.js`);//возвращает имена папок находящихся в директории, откуда вызывается эта функция, если функцию вызывает BEМ.js то вернётся массив папок находящихся в папке с этим файлом
 const findePugVariables = require(`${__dirname}/findePugVariables.js`)//Принимает имя файла - возвращает массив переменных
 
