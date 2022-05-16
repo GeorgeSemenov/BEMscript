@@ -72,9 +72,9 @@ const _show = function(cmd) {
         }
       });
     }else if(cmd.toLowerCase() == 'pages'){ // Если просят вывести список страничек
-      enumirateAndShow(thils.pages)
+      enumirateAndShow(this.pages)
     }else{//Если cmd не является ни 'pages' ни 'all', то скорее всего это или индекс элемента, массив которого нужно вывести, либо это имя блока, элементы которого нужно вывести
-      enumirateAndShow(thils.blocks,{
+      enumirateAndShow(this.blocks,{
         arrItemIndex: cmd,
         arrNames: [`elements`, `modificators`],
         embedRuleObj : {
