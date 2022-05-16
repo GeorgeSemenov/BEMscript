@@ -12,7 +12,13 @@ let bl2              = new cl.Block('Блок№2');
 let bl3              = new cl.Block('Блок№3');
 let bl4              = new cl.Block('Блок№4');
 
-let bembdReleased    = new cl.BEMBD(`заполненная база данных`, [bl1,bl2,bl3]);
+let pg1              = new cl.Page('page1');
+let pg2              = new cl.Page('page2');
+let pg3              = new cl.Page('page3');
+
+let bembdReleased    = new cl.BEMBD(`заполненная база данных`, [bl1,bl2,bl3], [pg1,pg2,pg3,]);
+
+
 
 mod1.parents.push('родблмод1',"родэлмод1");
 mod2.parents.push('родблмод2',"родэлмод2");

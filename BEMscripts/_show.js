@@ -24,16 +24,17 @@ function enumirateAndShow(arr,ruleObj){
   if(ruleObj.arrayItemIndex){//Был ли передан индекс сущности, элементы и модификаторы которой нужно вывести?
     if(isFinite(ruleObj.arrayItemIndex)){//Проверяем - является ли данный индекс числом
       if(ruleObj.arrayItemIndex >= 0 &&  ruleObj.arrayItemIndex < arr.length){//Если индекс не больше длины массива то выводим содержимое этого элемента
-        console.log(`${ruleObj.preEmbedSymbols}[${arrayItemIndex}] ${arr[arrayItemIndex].parents.join('')}${arr[arrayItemIndex].title} `);        
-        runForArrNamesAndEnumirateAndShow(arr[arrayItemIndex], ruleObj)
+        console.log(`${ruleObj.preEmbedSymbols}[${ruleObj.arrayItemIndex}] ${arr[ruleObj.arrayItemIndex].parents.join('')}${arr[ruleObj.arrayItemIndex].title} `);        
+        runForArrNamesAndEnumirateAndShow(arr[ruleObj.arrayItemIndex], ruleObj)
       }else{//если индекc отрицательный или больше длины массива, то выводим сообщение об обшибке
         console.log(`Ошибка в методе _show\nиндекс = ${ruleObj.arrayItemIndex} - не принадлежит массиву.`);
       }
-    }else{//ruleObj.arrayItemIndex - не число, видимо строка (но это не точно). 
+    }else{//ruleObj.arrayItemIndex - не число, видимо строка.
       let result = arr.find((item,index)=>{//Выбираем первый попавшийся элемент массива title которого равен arrayItemIndex (т.к. двух одинаковых блоков и тем более элементов быть не может) Если же ничего найденно не будет, то result будет равен undefined
-        item.title == ruleObj.arrayItemIndex
+        return item.title == ruleObj.arrayItemIndex
       })
       if(result){//Если найденно совпадение то выводим его подмассивы
+        console.log(`${ruleObj.preEmbedSymbols}[${ruleObj.arrayItemIndex}] ${result.parents.join('')}${result.title} `);        
         runForArrNamesAndEnumirateAndShow(result, ruleObj)
       }else{//Если совпадения не найденны, то выводится сообщение об ошибке.
         console.log(`Ошибка в методе _show -\nНе найден блок с именем "${ruleObj.arrayItemIndex}"\n`);
@@ -59,7 +60,9 @@ function runForArrNamesAndEnumirateAndShow(obj, ruleObj){//- данная фун
 } 
 
 const _show = function(cmd) {
-  if(cmd){//Если cmd неоределлено тогда выводим только блоки
+  (cmd == 0)? cmd = "0": cmd;//Если пользователь вводит 0, то превращаем в строку, так можно скипт не будет думать, что cmd неопределён
+  if(cmd){//Если cmd определенно тогда обрабатываем это cmd, в противном случае - выводим только блоки.
+    cmd += ""; //Превращаем cmd в строку, это нужно чтобы была возможность применять cmd.toLowerCase() если cmd будет числом, то вызов toLowerCase  приведёт к обшибке
     if (cmd.toLowerCase() == "all"){//Если просят вывести все сущности, то выводим всё.
       enumirateAndShow(this.blocks,{
         arrNames: [`elements`, `modificators`],
@@ -75,10 +78,10 @@ const _show = function(cmd) {
       enumirateAndShow(this.pages)
     }else{//Если cmd не является ни 'pages' ни 'all', то скорее всего это или индекс элемента, массив которого нужно вывести, либо это имя блока, элементы которого нужно вывести
       enumirateAndShow(this.blocks,{
-        arrItemIndex: cmd,
+        arrayItemIndex: cmd,
         arrNames: [`elements`, `modificators`],
         embedRuleObj : {
-          preEmbedSymbols  :  '>>>>',
+          preEmbedSymbols  :  '>>>',
           arrNames: [`modificators`],
           embedRuleObj : {
             preEmbedSymbols  :  '>>>>>',
@@ -89,6 +92,7 @@ const _show = function(cmd) {
   }else{
     enumirateAndShow(this.blocks)
   }
+  console.log(`\n\n\n`);
 }
 
 module.exports = _show;

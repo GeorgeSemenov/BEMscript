@@ -14,10 +14,11 @@ class BEMEntity{
 }
 
 class BEMBD extends BEMEntity {
-  constructor(title=`BEMBD`, blocks = []){
+  constructor(title=`BEMBD`, blocks = [], pages = []){
     super(title);
     this.blocks         = blocks;        //Массив строк, в каждой строке название блока
     this.destination    = __dirname;// переменная, которая указывает на место, где был вызван bem.js в данном случае он берёт своё значение в корневой папке
+    this.pages          = pages;
   };
 
   // init                  = require(bemFolder + '_init.js');//Под инициацией понимается инициализацию массива объектов блоков(это массив экземпляров класса Block), в папке которая прописана в переменной destination, эти сущности будут складываться в массив blocksArr и каждый будет хранить массивы объектов элементов и массива объектов модификаторов. Массив объектов элементов, будет хранить массив модификаторов.
@@ -56,9 +57,17 @@ class Modificator extends BEMEntity {
   // create               = createForAllBEMEntities.createForModification;
 };
 
+class Page{
+  constructor (title, parents=[]){
+    this.title         = title;
+    this.parents       = parents;
+  }
+};
+
 module.exports = {
   BEMBD        : BEMBD,
   Block        : Block,
   Element      : Element,
-  Modificator  : Modificator
+  Modificator  : Modificator,
+  Page         : Page,
 };
