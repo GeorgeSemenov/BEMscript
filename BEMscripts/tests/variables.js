@@ -1,0 +1,46 @@
+const cl = require('./../classes.js');
+let mod1             = new cl.Modificator('_модификатор№1')
+let mod2             = new cl.Modificator('_модификатор№2')
+let mod3             = new cl.Modificator('_модификатор№3')
+
+let elm1             = new cl.Element('__элемент№1')
+let elm2             = new cl.Element('__элемент№2')
+let elm3             = new cl.Element('__элемент№3')
+
+let bl1              = new cl.Block('Блок№1');
+let bl2              = new cl.Block('Блок№2');
+let bl3              = new cl.Block('Блок№3');
+let bl4              = new cl.Block('Блок№4');
+
+let bembdReleased    = new cl.BEMBD(`заполненная база данных`, [bl1,bl2,bl3]);
+
+mod1.parents.push('родблмод1',"родэлмод1");
+mod2.parents.push('родблмод2',"родэлмод2");
+mod3.parents.push('родблмод3',"родэлмод3");
+
+elm1.modificators.push(mod1,mod2) ;
+elm2.modificators.push(mod3) ;
+
+elm1.parents.push('родблэлм1');
+elm2.parents.push('родблэлм2');
+elm3.parents.push('родблэлм3');
+
+bl1.elements.push(elm2,elm1);
+bl1.modificators.push(mod2,mod1);
+
+bl2.elements.push(elm1,elm2);
+
+bl3.modificators.push(mod1,mod2);
+
+module.exports = {
+  folders: [
+    '__element',
+    '__Element',
+    '_Element',
+    'modificator',
+    'YouAreGomic',
+    '111',
+    'imposibru__ololo',
+  ],
+  bembdReleased, 
+}

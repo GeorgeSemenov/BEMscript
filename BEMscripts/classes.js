@@ -1,8 +1,7 @@
 //Содержит классы которые используются в методах и фукнциях
-const showArrayBemEnteties = require('./showArrayBemEnteties');
-const showEntetiesForAllBEMEntities = require('./_showEntities');
-const handleAnswerForAllBEMEntities = require(`./_handleAnswer`);
-const createForAllBEMEntities = require(`./_create`);
+// const showEntetiesForAllBEMEntities = require('./_showEntities');
+// const handleAnswerForAllBEMEntities = require(`./_handleAnswer`);
+// const createForAllBEMEntities = require(`./_create`);
 let bemFolder = './';
 
 class BEMEntity{
@@ -15,58 +14,51 @@ class BEMEntity{
 }
 
 class BEMBD extends BEMEntity {
-  constructor(title=`BEMBD`){
+  constructor(title=`BEMBD`, blocks = []){
     super(title);
-    this.amountOfBlocks = 0;//Сколько всего блоков
-    this.blocksArr      = [1,2,3];//Массив строк, в каждой строке название блока
+    this.blocks         = blocks;        //Массив строк, в каждой строке название блока
     this.destination    = __dirname;// переменная, которая указывает на место, где был вызван bem.js в данном случае он берёт своё значение в корневой папке
   };
 
-  init                  = require(bemFolder + '_init.js');//Под инициацией понимается инициализацию массива объектов блоков(это массив экземпляров класса Block), в папке которая прописана в переменной destination, эти сущности будут складываться в массив blocksArr и каждый будет хранить массивы объектов элементов и массива объектов модификаторов. Массив объектов элементов, будет хранить массив модификаторов.
-  create                = createForAllBEMEntities.createForBEMBD;//Создаём БЭМ сущность(папка с назнванием и scss файли и pug файл при необоходимости) с именем полученным от метода ask(), также вносятся необохдимые изменения в массивы blocksArr и другие, если необохдимо
-  logToDatabase         = require(bemFolder + '_logToDatabase.js');//Записывает данные в файл базы данных
-  logFromDatabase       = require(bemFolder + '_logfromDatabase.js');//Считывает данные с файла базы данных
-  showEntities          = showEntetiesForAllBEMEntities.showEntetiesForBEMBD;
-  chooseBlock           = require(bemFolder + '_chooseBlock.js');//выбирает блок
-  handleAnswer          = handleAnswerForAllBEMEntities.handleAnswerForBEMBD;
+  // init                  = require(bemFolder + '_init.js');//Под инициацией понимается инициализацию массива объектов блоков(это массив экземпляров класса Block), в папке которая прописана в переменной destination, эти сущности будут складываться в массив blocksArr и каждый будет хранить массивы объектов элементов и массива объектов модификаторов. Массив объектов элементов, будет хранить массив модификаторов.
+  // create                = createForAllBEMEntities.createForBEMBD;//Создаём БЭМ сущность(папка с назнванием и scss файли и pug файл при необоходимости) с именем полученным от метода ask(), также вносятся необохдимые изменения в массивы blocksArr и другие, если необохдимо
+  // logToDatabase         = require(bemFolder + '_logToDatabase.js');//Записывает данные в файл базы данных
+  // logFromDatabase       = require(bemFolder + '_logfromDatabase.js');//Считывает данные с файла базы данных
+  // showEntities          = showEntetiesForAllBEMEntities.showEntetiesForBEMBD;
+  // chooseBlock           = require(bemFolder + '_chooseBlock.js');//выбирает блок
+  // handleAnswer          = handleAnswerForAllBEMEntities.handleAnswerForBEMBD;
 };
 
 class Block extends BEMEntity{
-  constructor (title= 'no block title', elements=[], modifications =[],variables=[]) { 
+  constructor (title= 'no block title', elements=[], modifications =[],variables=[],parents = []) { 
     super(title);
     this.elements      = elements;
-    this.modifications = modifications;
+    this.modificators  = modifications;
     this.variables     = variables;
+    this.parents       = parents;
   }
-  create               = createForAllBEMEntities.createForBlock;
-  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForBlock;
-  handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForBlock;
+  // create               = createForAllBEMEntities.createForBlock;
 }
 class Element extends BEMEntity{
-  constructor(title= 'no element title', modifications =[],variables=[], parentName='') { 
+  constructor(title= 'no element title', modifications =[],variables=[], parents=[]) { 
     super(title);
-    this.modifications = modifications;
+    this.modificators  = modifications;
     this.variables     = variables;
-    this.parentName    = parentName;
+    this.parents       = parents;
   }
-  create               = createForAllBEMEntities.createForElement;
-  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForElement;
-  handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForElement;
+  // create               = createForAllBEMEntities.createForElement;
 }
-class Modification extends BEMEntity {
-  constructor (title=`no modification title`,parentName='', grandParentName = ''){
+class Modificator extends BEMEntity {
+  constructor (title=`no modification title`,parents=[]){
     super(title);
-    this.parentName    = parentName;
-    this.grandParentName= grandParentName;
+    this.parents       = parents;
   }
-  create               = createForAllBEMEntities.createForModification;
-  showEntities         = showEntetiesForAllBEMEntities.showEntetiesForModification;//Переопределяем метод, чтобы не выходил сообщение, о том, что метод не переопределён
-  handleAnswer         = handleAnswerForAllBEMEntities.handleAnswerForModification;
+  // create               = createForAllBEMEntities.createForModification;
 };
 
 module.exports = {
   BEMBD        : BEMBD,
   Block        : Block,
   Element      : Element,
-  Modification : Modification
+  Modificator  : Modificator
 };
