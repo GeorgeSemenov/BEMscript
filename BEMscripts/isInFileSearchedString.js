@@ -1,16 +1,13 @@
 //Функция принимает полное имя файла(строку) и искомую строку, возвращяет true, 
 //если эта строка есть, если этой строки нет или данный файл отсутствует - возвращает false
 
-const getFiles = require(`${__dirname}/getFiles.js`);
+const readFromFile = require(`${__dirname}/readFromFile.js`);
 
 module.exports = function(fullFileName, searchedStr){
-  let directoryName; // директория в которой находится fullFileName
-  let fullFileNameInWords;
-  if (fullFileName.includes('/')){fullFileNameInWords = fullFileName.split('/');}//для windows систем
-  else{fullFileNameInWords = fullFileName.split('\\');}//Для linux систем
-  let directoryName = fullFileNameInWords[fullFileNameInWords.length-2];
-  
-  let files = getFiles(__dirname);
-  console.log(`files = ${directoryName}`);
-
+  let fileContent = readFromFile(fullFileName);
+  if (fileContent){//Проверяем, существует ли fullFileName, если не существует, то в fileContent будет false
+    return fileContent.includes(searchedStr)
+  }else{// Если fullFileName - не существует, то возращаем false
+    return false;
+  }
 }

@@ -18,7 +18,7 @@ const readFromFile = function(file){
     }); 
   }
   catch(err){
-    if(err.errno == (-4058) ){//Если файла нет, возвращает false
+    if( (err.errno == (-4058)) || (err.errno == (-2)) ){//Если файла нет, возвращает false
       return false;
     }
     console.log('\n\n-----------Error in readFromFile function description beginning-----------\n');
