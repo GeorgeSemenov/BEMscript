@@ -2,9 +2,9 @@
 //Ничего не возвращает, только обрабатывает ошибку 4075 если папка с указанным именем уже существует
 //В противном случае пробрасывает ошибку дальше.
 const fs = require('fs');
-const createFolder = function (folder,destination='./'){
+const createFolder = function (folder){
   try {
-    fs.mkdirSync(`${destination}/${folder}`);  
+    fs.mkdirSync(`${folder}`);  
   }catch(err){
     if(err.errno == -4075){
       console.log(`folder ${folder} already exist, this is good.`);

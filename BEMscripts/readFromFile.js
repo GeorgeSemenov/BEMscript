@@ -1,6 +1,6 @@
 /*
   Возвращает данные содеражщиеся в указанном файле,
-  Если файла нет - возвращает -1
+  Если файла нет - возвращает false
   Если при считывании возникла ошибка - возвращает пустую строку
 */
 const fs = require('fs');
@@ -18,8 +18,8 @@ const readFromFile = function(file){
     }); 
   }
   catch(err){
-    if(err.errno == (-4058) ){//Если файла нет, возвращает (-1)
-      return -1;
+    if(err.errno == (-4058) ){//Если файла нет, возвращает false
+      return false;
     }
     console.log('\n\n-----------Error in readFromFile function description beginning-----------\n');
     console.log(err);
