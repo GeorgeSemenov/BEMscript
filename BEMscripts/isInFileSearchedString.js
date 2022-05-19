@@ -17,15 +17,14 @@ module.exports = function(fullFileName, searchedStr, isStrictMode = false){
             let symbolAftr = undefined;
             indexOfSearchedStr? symbolBfr = fileContent[indexOfSearchedStr - 1]: symbolBfr = undefined;//Если искомая строка не находится в начале файла(т.е. её индекс ≠ 0)
             ((indexOfSearchedStr + searchedStr.length) < fileContent.length)? symbolAftr = fileContent[indexOfSearchedStr + searchedStr.length] : symbolAft = undefined;//Если искомая строка не находится в конце файла
-            // console.log(`symbolBfr = ${symbolBfr}\n symbolAftr = ${symbolAftr}`);
             if(symbolBfr && symbolAftr){//Если оба символа существуют
-              if( (symbolBfr != '-') && (symbolAftr != '-') && (symbolBfr != '_') && (symbolAftr != '_') && (/[a-z]/i.test(symbolBfr) ) && (/[a-z]/i.test(symbolAftr)) ){return true;}//Если все условия выполняются Значит искомая строка с данными индексами и обрамляющими символами Не является частью другого слова и при этом равняется searchedStr)
+              if( (symbolBfr != '-') && (symbolAftr != '-') && (symbolBfr != '_') && (symbolAftr != '_') && !(/[a-z]/i.test(symbolBfr) ) && !(/[a-z]/i.test(symbolAftr)) ){return true;}//Если все условия выполняются Значит искомая строка с данными индексами и обрамляющими символами Не является частью другого слова и при этом равняется searchedStr)
               else{indexOfSearchedStr++;}//Увеличиваем на единицу текущий индекс, чтобы следующая итерация цикла нашла другое значение indexOfSearchedStr
             }else if(symbolBfr){//Если существет только символ перед искомой стр.
-              if((symbolBfr != '-') && (symbolBfr != '_') && (/[a-z]/i.test(symbolBfr)) ){return true}//Если все условия выполняются Значит искомая строка стоит в конце файлаи символ перед ней указывает на то что искомая строка не часть другого слова
+              if((symbolBfr != '-') && (symbolBfr != '_') && !(/[a-z]/i.test(symbolBfr)) ){return true}//Если все условия выполняются Значит искомая строка стоит в конце файлаи символ перед ней указывает на то что искомая строка не часть другого слова
               else{indexOfSearchedStr++;}//Увеличиваем на единицу текущий индекс, чтобы следующая итерация цикла нашла другое значение indexOfSearchedStr
             }else if(symbolAftr){//Если существет только символ после искомой стр
-              if((symbolAftr != '-') && (symbolAftr != '_') && (/[a-z]/i.test(symbolAftr))){return true}//Если существет только символ после искомой стр
+              if((symbolAftr != '-') && (symbolAftr != '_') && !(/[a-z]/i.test(symbolAftr))){return true}//Если существет только символ после искомой стр
               else{indexOfSearchedStr++;}//Увеличиваем на единицу текущий индекс, чтобы следующая итерация цикла нашла другое значение indexOfSearchedStr
             }else{return true}//Судя по всему раз нет символ до searchedStr и после, то в файле только searchedStr возвращаем true
           }
