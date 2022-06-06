@@ -8,7 +8,7 @@ const func = function (currentFolder=__dirname, isDevMode = false){
         return file
     });
   }catch(err){
-    console.log(`>>>>>\n  Error in function getFolders\n\n${err}`);
+    console.log(`>>>>>\n  Error in function getFiles\n\n${err}`);
   }
   if (files == undefined)
     files = [];
