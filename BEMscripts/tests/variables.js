@@ -38,6 +38,13 @@ bl2.elements.push(elm1,elm2);
 
 bl3.modificators.push(mod1,mod2);
 
+let syntaxRequests = [
+  'tag.Block1',
+  'tag.Block1 tag.Block2',
+  `tag.blockName1{tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin} tag.Block2{tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin}`,
+  `tag.blockName2{tag__elementName_modifierName<variables>[arrName,mixin/elementName]  ~someMixin} tag.blockName3`,
+]
+
 module.exports = {
   folders: [
     '__element',
@@ -49,4 +56,5 @@ module.exports = {
     'imposibru__ololo',
   ],
   bembdReleased, 
+  syntaxRequests,
 }
