@@ -44,7 +44,8 @@ let syntaxRequests = [
   `tag.blockName1{tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin} tag.Block2{tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin}`,
   `tag.blockName2{tag__elementName_modifierName<variables>[arrName,mixin/elementName]  ~someMixin} tag.blockName3`,
   `tag.blockName1 tag.blockName3 tag.blockName2 tag.blockName4`,
-  `blockName1{tag__elementName} blockName2 tag.blockName3{__element<variables>}`,
+  `blockName1{tag__elementName} blockName2 tag.blockName3{__element<variables>} blockName4`,
+  `1{tag__elementName} blockName2 3{__element<variables>}`,
 ]
 
 module.exports = {
