@@ -7,12 +7,12 @@ tag.blockName1{tag__elementName_modifierName<pugVariables> tag__elementName[item
 ,
 tag.blockName2{}]*/
 const returnBEMStringsArray = function (str){
-  let spacePos      = str.indexOf('');
+  let spacePos      = str.indexOf(' ');
   let curlyBracePos = str.indexOf('{');
-  if (!(~curlyBracePosition && !(~spacePosition))) {return [str]}//Если нет ни пробелов ни фигурных скобок
-  else if(!(~curlyBracePosition ) && ~spacePosition){return str.split(' ')}//Если нет фигурных скобочек но есть пробелы
-  else if(~curlyBracePosition && !(~spacePosition)){return [str]}//Если есть фигурные скобочки но нет пробелов
-  else if(~curlyBracePosition && ~spacePosition){return str.split('} ')}//Если есть фигурные скобочки и пробелы
+  if (!(~curlyBracePos) && !(~spacePos)) {return [str]}//Если нет ни пробелов ни фигурных скобок
+  else if(!(~curlyBracePos) && ~spacePos){return str.split(' ')}//Если нет фигурных скобочек но есть пробелы
+  else if(~curlyBracePos && !(~spacePos)){return [str]}//Если есть фигурные скобочки но нет пробелов
+  else if(~curlyBracePos && ~spacePos){return str.split('} ')}//Если есть фигурные скобочки и пробелы
 };
 
 module.exports = returnBEMStringsArray;
