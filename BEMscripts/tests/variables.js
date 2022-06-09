@@ -47,6 +47,21 @@ let syntaxRequests = [
   `blockName1{tag__elementName} blockName2 tag.blockName3{__element<variables>} blockName4`,
   `1{tag__elementName} blockName2 3{__element<variables>}`,
 ]
+let BEMStrings = [
+  `tag__elementName_modificatorName<variables>`,
+  `_modificatorName`,
+  `tag__elementName_modificatorName`,
+  `tag__elementName<variables>`,
+  `__elementName_modificatorName<variables>`,
+  `__elementName<variables>`,
+  `__elementName`,
+  `tag.blockName<variables>`,
+  `tag.blockName`,
+  `blockName<variables>`,
+  `blockName`,
+  `tag__elementName_modificatorName<var1,var2,var3>`,
+  `tag__elementName_modificatorName<var1,var2,var3>[]`,
+]
 
 module.exports = {
   folders: [
@@ -60,4 +75,5 @@ module.exports = {
   ],
   bembdReleased, 
   syntaxRequests,
+  BEMStrings,
 }
