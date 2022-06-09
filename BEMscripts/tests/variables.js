@@ -60,7 +60,13 @@ let BEMStrings = [
   `blockName<variables>`,
   `blockName`,
   `tag__elementName_modificatorName<var1,var2,var3>`,
-  `tag__elementName_modificatorName<var1,var2,var3>[]`,
+  `tag__elementName_modificatorName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+  `__elementName_modificatorName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+  `__elementName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+  `tag__elementName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+  `tag__elementName_modificatorName[arrName,arrItemName,elementName]`,
+  `tag__elementName[arrName,arrItemName,elementName]`,
+  `__elementName[arrName,arrItemName,elementName]`,
 ]
 
 module.exports = {
