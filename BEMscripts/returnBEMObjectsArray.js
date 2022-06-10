@@ -16,9 +16,10 @@ const returnBEMObjectsArray = function (str){
       let char = str[index];
       if (char =='{') {//Если цикл наткнулся на открывающуюся скобочку, значит определяем title и находим закрывающую скобочку это и будет inner
         if (str.includes('}') ) {//раз есть открывающая скобочка то должна быть и закрывающая иначе обшибка
-          let closedCurlyBracketPos = str.indexOf('}')
-          let title = str.slice(0,openCurlyBracketPos)
-          let inner = str.slice(openCurlyBracketPos+1, closedCurlyBracketPos)
+          openCurlyBracketPos = index;//Каждую итерацию цикла мы будем определять мы будем заного определять openCurlyBrackets, на случай, если там несколько открывающихся скобочек.
+          let closedCurlyBracketPos = str.indexOf('}');
+          let title = str.slice(0,openCurlyBracketPos);
+          let inner = str.slice(openCurlyBracketPos+1, closedCurlyBracketPos);
           bemObjects.push({title: title, inner: inner});
 
           str=( (closedCurlyBracketPos + 2) < str.length)? str.slice(closedCurlyBracketPos + 2): str.slice(closedCurlyBracketPos)//+2 - так мы съедаем } и пробел, который идёт после неё
