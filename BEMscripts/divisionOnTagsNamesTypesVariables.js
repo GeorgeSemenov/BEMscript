@@ -11,10 +11,18 @@ tag.blockName<variables>[arrName,arrItemName,mixin/elementName]
 его порядковый номер.
 */
 const divisionOnTagsNamesTypesVariables = function (str, isItBlockTitle=false){
-  let tag, elementName, modificatorName, mixinName, variables, arrObj;
-  if(str[0] != '_'){//Является ли первый символ началом имени элемента или модификатора, если нет, значит указан тэг
-    tag = str.slice(0,str.indexOf('_') )
-    str = str.slice(str.indexOf('_') )
+  let tag, blockName, elementName, modificatorName, mixinName, variables, arrObj;
+  let tagCondition, symbolAfterTag;
+  if(isItBlockTitle){
+    symbolAfterTag = '.';
+    tagCondition = str.includes('.');
+  }else{
+    symbolAfterTag = '_';
+    tagCondition = (str[0] != '_') && str.includes('_');
+  }
+  if(tagCondition){//Для блок тайтла и для элемента вычленение тэга имеют разные условия но вычленяются одинаково. поэтому условия(tagCondition) описаны выше     
+    tag = str.slice(0,str.indexOf(symbolAfterTag) )
+    str = isItBlockTitle? str.slice(str.indexOf(symbolAfterTag) +1) : str.slice(str.indexOf( symbolAfterTag ));//В случае с блоком - нужно удалять ещё и точку, т.к. она не является частью имени блока.
   }
   if(str.includes(`[`)){arrObj = extractDataFrombrackets('[',']');}
   if(str.includes(`<`)){variables = extractDataFrombrackets('<','>');}
@@ -29,10 +37,11 @@ const divisionOnTagsNamesTypesVariables = function (str, isItBlockTitle=false){
   }
   if(str.length > 0){//Если в строке ещё остались символы значит это модификатор или миксина
     if(str.includes(`_`)){modificatorName = str}
-    else{mixinName = str}
+    else{isItBlockTitle?(blockName = str):(mixinName = str)}
   }
   return {
     tag : tag, 
+    blockName: blockName,
     elementName : elementName, 
     modificatorName : modificatorName,
     mixinName : mixinName,
@@ -49,7 +58,7 @@ const divisionOnTagsNamesTypesVariables = function (str, isItBlockTitle=false){
     if(str[str.length-1] == closedBracket){//Если есть закрывающая скобочка
       str = str.slice(0,str.indexOf(closedBracket) ) //Отрезаем закрывающую скобочку
     }
-    let result = str.slice( (str.indexOf(openBracket) + 1), (str.length - 1) ).split(',')
+    let result = str.slice( (str.indexOf(openBracket) + 1), (str.length) ).split(',')
     str = str.slice(0, str.indexOf(openBracket));
 
     if (openBracket == '[') {return {
