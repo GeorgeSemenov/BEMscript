@@ -72,6 +72,12 @@ let BEMStrings = [
   {str:`tag__elementName[arrName,arrItemName,elementName]`, isItBlockTitle:false},
   {str:`__elementName[arrName,arrItemName,elementName]`, isItBlockTitle:false},
   {str:`somemixin`, isItBlockTitle:false},
+];
+
+let imports = [
+  {pug: "это pug фаел", scss: "это scss файл"},
+  {js: "это js фаел", bem: "это bem файл"},
+  {pug: "это нормальный pug файл", scss: "это нормальный scss файл", js: "это нормальный js файл"},
 ]
 
 module.exports = {
@@ -87,4 +93,5 @@ module.exports = {
   bembdReleased, 
   syntaxRequests,
   BEMStrings,
+  imports,
 }

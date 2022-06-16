@@ -1,5 +1,5 @@
-//Данная функция создаёт папку с переданным именем, второй, необязательный аргумент - назначение, это путь до этой папки
-//Ничего не возвращает, только обрабатывает ошибку 4075 если папка с указанным именем уже существует
+//Данная функция создаёт папку с переданным именем
+//Если папка уже созданна  (ошибку 4075) то ничего не происходит.
 //В противном случае пробрасывает ошибку дальше.
 const fs = require('fs');
 const createFolder = function (folder){
@@ -7,7 +7,7 @@ const createFolder = function (folder){
     fs.mkdirSync(`${folder}`);  
   }catch(err){
     if(err.errno == -4075){
-      console.log(`folder ${folder} already exist, this is good.`);
+      // console.log(`folder ${folder} already exist, this is good.`);
     }else{
       throw(err); 
     }
