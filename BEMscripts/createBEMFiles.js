@@ -10,11 +10,10 @@ const mkdir     = require(`./createFolder.js`);
 const wtf       = require(`./writeToFile.js`);
 const createBEMFiles = function (dir, BEMEntityTitle, imports){//Задаём вопрос
   if(!gFolders(dir).includes(BEMEntityTitle)){mkdir(`${dir}/${BEMEntityTitle}`);}//Если папка не созданна с указанным именем, то нужно её создать
-  let files = gFiles(dir);
+  let files = gFiles(`${dir}/${BEMEntityTitle}`);
   for(let ext in imports){// перебираем указанные свойства в imports - pug, scss, js и т.д. и записываем их в создаваемые файлы
     if(!files.includes(`${BEMEntityTitle}.${ext}`)){//Если среди файлов нет файла с именем BEMEntities.ext то надо его создать и наполнить
-      console.log(`imports[${ext}] =` );
-      wtf(`${dir}/${BEMEntityTitle}.${ext}`,imports[`${ext}`])
+      wtf(`${dir}/${BEMEntityTitle}/${BEMEntityTitle}.${ext}`,imports[ext])
     }//В противном случае - ничего не делать, он и так уже заполнен чем нужно.
   }
 };
