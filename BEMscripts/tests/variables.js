@@ -80,6 +80,49 @@ let imports = [
   {pug: "это нормальный pug файл", scss: "это нормальный scss файл", js: "это нормальный js файл"},
 ]
 
+//массив objectsForTestingGetFilesContent - составлял так, чтобы при передаче его элементов в функции getPugContent, getScssContent, getJSContent
+//Получился текст как AnkoTest.about-us, AnkoTest.differentiators__lists, AnkoTest.about-us__advantage-container
+//metallamp_stage2.text-field__description, 
+let objectsForTestingGetFilesContentFunctions = [
+  {
+    ruleObj:{
+      blockName: `about-us`,
+      tag: 'aside',
+    },
+    blockName:undefined
+  },
+  {
+    ruleObj:{
+      elementName: `__lists`,
+      arrObj:{
+        arrName: `listsArr`,
+        arrItemName: `list`,
+        mixement: `listMixement`
+      }
+    },
+    blockName:`differentiators`
+  },
+  {
+    ruleObj:{
+      elementName: `__advantage-container`,
+      arrObj:{
+        arrName: `advantagesArr`,
+        arrItemName: `advantage`,
+        mixement: `advantage`
+      }
+    },
+    blockName:`about-us`
+  },
+  {
+    ruleObj:{
+      elementName: `__description`,
+      variables:["description","title"],
+      tag: 'p',
+    },
+    blockName:`text-field`
+  },
+]
+
 module.exports = {
   folders: [
     '__element',
@@ -94,4 +137,5 @@ module.exports = {
   syntaxRequests,
   BEMStrings,
   imports,
+  objectsForTestingGetFilesContentFunctions,
 }
