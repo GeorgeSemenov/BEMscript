@@ -3,5 +3,5 @@ const rsc = require(`${__dirname}/../returnScssContent.js`)
 
 console.log(`*********************************************************\n*********************************************************\n*********************************************************\n`);
 v.objectsForTestingGetFilesContentFunctions.forEach(obj=>{
-  console.log(`${rsc(obj.ruleObj,obj.blockName)}`);
+  console.log(`${rsc(obj.ruleObj,obj.blockName,obj.type)}`);
 })

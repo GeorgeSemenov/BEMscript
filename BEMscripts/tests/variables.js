@@ -121,6 +121,33 @@ let objectsForTestingGetFilesContentFunctions = [
     },
     blockName:`text-field`
   },
+  {
+    ruleObj:{
+      elementName: `__description`,
+      modificatorName: "_modification",
+      variables:["description","title"],
+      tag: 'p',
+    },
+    blockName:`text-field`,
+    type: `modificator`,
+  },
+  {
+    ruleObj:{
+      modificatorName: `_modurficontions`,
+      variables:["description","title"],
+      tag: 'p',
+    },
+    blockName:`text-field`,
+    type: `modificator`,
+  },
+  {
+    ruleObj:{
+      variables:["description","title"],
+      tag: 'p',
+      mixinName: "somiMixin",
+    },
+    blockName:`text-field`,
+  },
 ]
 
 module.exports = {
