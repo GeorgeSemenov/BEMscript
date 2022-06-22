@@ -39,39 +39,363 @@ bl2.elements.push(elm1,elm2);
 bl3.modificators.push(mod1,mod2);
 
 let syntaxRequests = [
-  'tag.Block1',
-  'tag.Block1 tag.Block2',
-  `tag.blockName1{tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin} tag.Block2{tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin}`,
-  `tag.blockName2{tag__elementName_modifierName<variables>[arrName,mixin/elementName]  someMixin} tag.blockName3`,
-  `tag.blockName1 tag.blockName3 tag.blockName2 tag.blockName4`,
-  `blockName1{tag__elementName} blockName2 tag.blockName3{__element<variables>} blockName4`,
-  `1{tag__elementName} blockName2 3{__element<variables>}`,
+  {
+    sentence : `1{tag__elementName} blockName2 3{__element<variables>}`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `1`, inner: `tag__elementName`},
+      {title: `blockName2`},
+      {title: `3`, inner: `__element<variables>`},
+    ],
+  },
+  {
+    sentence : `tag.blockName2{tag__elementName_modifierName<variables>[arrName,mixin/elementName]  someMixin}`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.blockName2`, inner: `tag__elementName_modifierName<variables>[arrName,mixin/elementName]  someMixin`},
+    ],
+  },
+  {
+    sentence : `tag.Block1`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.Block1`},
+    ],
+  },
+  {
+    sentence : `tag.Block1 tag.Block2`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.Block1`},
+      {title: `tag.Block2`},
+    ],
+  },
+  {
+    sentence : `tag.blockName1{tag__elementName<variables>[arrName,mixin/elementName] someMixin} tag.Block2{tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin}`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.blockName1`, inner: `tag__elementName<variables>[arrName,mixin/elementName] someMixin`},
+      {title: `tag.Block2`, inner: `tag__elementName<variables>[arrName,mixin/elementName]  ~someMixin`},
+    ],
+  },
+  {
+    sentence : `tag.blockName2{tag__elementName_modifierName<variables>[arrName,mixin/elementName]  someMixin} tag.blockName3`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.blockName2`, inner: `tag__elementName_modifierName<variables>[arrName,mixin/elementName]  someMixin`},
+      {title: `tag.blockName3`},
+    ],
+  },
+  {
+    sentence : `tag.blockName1 tag.blockName3 tag.blockName2 tag.blockName4`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.blockName1`},
+      {title: `tag.blockName3`,},
+      {title: `tag.blockName2`,},
+      {title: `tag.blockName4`},
+    ],
+  },
+  {
+    sentence : `blockName1{tag__elementName} blockName2 tag.blockName3{__element<variables>} blockName4`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `blockName1`, inner: `tag__elementName`},
+      {title: `blockName2`},
+      {title: `tag.blockName3`, inner: `__element<variables>`},
+      {title: `blockName4`},
+    ],
+  },
+  {
+    sentence : `tag.blockName<var1,var2>[arrName,arrItemName,mixement]{tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin} blockName2`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.blockName<var1,var2>[arrName,arrItemName,mixement]`, inner: `tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin`},
+      {title: `blockName2`},
+    ],
+  },
+  {
+    sentence : `tag.blockName[arrName,arrItemName,mixement]{tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin} blockName2`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.blockName[arrName,arrItemName,mixement]`, inner: `tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin`},
+      {title: `blockName2`},
+    ],
+  },
+  {
+    sentence : `tag.blockName{tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin} blockName2`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `tag.blockName`, inner: `tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin`},
+      {title: `blockName2`},
+    ],
+  },
+  {
+    sentence : `blockName<var1,var2>[arrName,arrItemName,mixement]{tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin} blockName2`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `blockName<var1,var2>[arrName,arrItemName,mixement]`, inner: `tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin`},
+      {title: `blockName2`},
+    ],
+  },
+  {
+    sentence : `blockName[arrName,arrItemName,mixement]{tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin} blockName2`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `blockName[arrName,arrItemName,mixement]`, inner: `tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin`},
+      {title: `blockName2`},
+    ],
+  },
+  {
+    sentence : `blockName{tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin} blockName2`,
+    rightAnswerForReturnBEMObjesctsFunction: [
+      {title: `blockName`, inner: `tag__elementName_modifierName<var1,var2,va3>[arrName,arrItemName,mixin/elementName]  someMixin`},
+      {title: `blockName2`},
+    ],
+  },
 ]
 let BEMStrings = [
-  {str:`tag__elementName_modificatorName<variables>`, isItBlockTitle:false},
-  {str:`_modificatorName`, isItBlockTitle:false},
-  {str:`tag__elementName_modificatorName`, isItBlockTitle:false},
-  {str:`tag__elementName<variables>`, isItBlockTitle:false},
-  {str:`__elementName_modificatorName<variables>`, isItBlockTitle:false},
-  {str:`__elementName<variables>`, isItBlockTitle:false},
-  {str:`__elementName`, isItBlockTitle:false},
-  {str:`tag.blockName<variables>[arrName,arrItemName,elementName]`, isItBlockTitle:true},
-  {str:`tag.blockName[arrName,arrItemName,elementName]`, isItBlockTitle:true},
-  {str:`tag.blockName<variables>`, isItBlockTitle:true},
-  {str:`tag.blockName`, isItBlockTitle:true},
-  {str:`blockName<variables>[arrName,arrItemName,elementName]`, isItBlockTitle:true},
-  {str:`blockName[arrName,arrItemName,elementName]`, isItBlockTitle:true},
-  {str:`blockName<variables>`, isItBlockTitle:true},
-  {str:`blockName`, isItBlockTitle:true},
-  {str:`tag__elementName_modificatorName<var1,var2,var3>`, isItBlockTitle:false},
-  {str:`tag__elementName_modificatorName<var1,var2,var3>[arrName,arrItemName,elementName]`, isItBlockTitle:false},
-  {str:`__elementName_modificatorName<var1,var2,var3>[arrName,arrItemName,elementName]`, isItBlockTitle:false},
-  {str:`__elementName<var1,var2,var3>[arrName,arrItemName,elementName]`, isItBlockTitle:false},
-  {str:`tag__elementName<var1,var2,var3>[arrName,arrItemName,elementName]`, isItBlockTitle:false},
-  {str:`tag__elementName_modificatorName[arrName,arrItemName,elementName]`, isItBlockTitle:false},
-  {str:`tag__elementName[arrName,arrItemName,elementName]`, isItBlockTitle:false},
-  {str:`__elementName[arrName,arrItemName,elementName]`, isItBlockTitle:false},
-  {str:`somemixin`, isItBlockTitle:false},
+  {
+    str:`tag__elementName_modificatorName<variables>`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      modificatorName: `_modificatorName`, 
+      variables: [`variables`],
+    }
+  },
+  {
+    str:`_modificatorName`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      modificatorName: `_modificatorName`, 
+    }
+  },
+  {
+    str:`tag__elementName_modificatorName`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      modificatorName: `_modificatorName`, 
+    }
+  },
+  {
+    str:`tag__elementName<variables>`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      variables: [`variables`],
+    }
+  },
+  {
+    str:`__elementName_modificatorName<variables>`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      elementName: `__elementName`,
+      modificatorName: `_modificatorName`, 
+      variables: [`variables`],
+    }
+  },
+  {
+    str:`__elementName<variables>`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      elementName: `__elementName`,
+      variables: [`variables`],
+    }
+  },
+  {
+    str:`__elementName`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      elementName: `__elementName`,
+    }
+  },
+  {
+    str:`tag.blockName<variables>[arrName,arrItemName,elementName]`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      blockName: `blockName`, 
+      variables: [`variables`],
+      arrObj:{
+        arrName:`arrName`,
+        arrItemName:`arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`tag.blockName[arrName,arrItemName,elementName]`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      blockName: `blockName`, 
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`tag.blockName<variables>`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      blockName: `blockName`, 
+      variables: [`variables`],
+    }
+  },
+  {
+    str:`tag.blockName`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      blockName: `blockName`, 
+    }
+  },
+  {
+    str:`blockName<variables>[arrName,arrItemName,elementName]`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      blockName: `blockName`,
+      variables: [`variables`],
+      arrObj:{
+        arrName:`arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`,
+      }
+    }
+  },
+  {
+    str:`blockName[arrName,arrItemName,elementName]`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      blockName: `blockName`, 
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`blockName<variables>`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      blockName: `blockName`, 
+      variables: [`variables`],
+    }
+  },
+  {
+    str:`blockName`,
+    isItBlockTitle:true,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      blockName: `blockName`, 
+    }
+  },
+  {
+    str:`tag__elementName_modificatorName<var1,var2,var3>`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      modificatorName: `_modificatorName`, 
+      variables: [`var1`,`var2`,`var3`],
+    }
+  },
+  {
+    str:`tag__elementName_modificatorName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      modificatorName: `_modificatorName`, 
+      variables: [`var1`,`var2`,`var3`],
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName:`elementName`
+      }
+    }
+  },
+  {
+    str:`__elementName_modificatorName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      elementName: `__elementName`,
+      modificatorName: `_modificatorName`, 
+      variables: [`var1`,`var2`,`var3`],
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`__elementName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      elementName: `__elementName`,
+      variables: [`var1`,`var2`,`var3`],
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`}
+    }
+  },
+  {
+    str:`tag__elementName<var1,var2,var3>[arrName,arrItemName,elementName]`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      variables: [`var1`,`var2`,`var3`],
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`tag__elementName_modificatorName[arrName,arrItemName,elementName]`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      modificatorName: `_modificatorName`,
+      arrObj:{
+        arrName:`arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`tag__elementName[arrName,arrItemName,elementName]`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      tag: `tag`, 
+      elementName: `__elementName`,
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`__elementName[arrName,arrItemName,elementName]`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      elementName: `__elementName`,
+      arrObj:{
+        arrName: `arrName`,
+        arrItemName: `arrItemName`,
+        mixinOrElementName: `elementName`
+      }
+    }
+  },
+  {
+    str:`somemixin`,
+    isItBlockTitle:false,
+    rightAnswerForDivisionOnTagsNamesTypesVariablesFunction: {
+      mixinName: `somemixin`,
+    }
+  },
 ];
 
 let imports = [

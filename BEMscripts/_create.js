@@ -1,121 +1,54 @@
-const path          = require('path');
-const fs            = require('fs');
-const ask           = require(`./ask.js`);
-const createFolder  = require('./createFolder.js');
-const writeToFile   = require('./writeToFile.js');
-const cl            = require('./classes.js');
-const isElement     = require('./isElement.js');
-const isModifier    = require('./isModifier.js');
+/* create(str[,className])
+str - строка, которая может включать в себя title какой-либо сущности (блок или page).
+Если указан className [block, page]- то будет создана та сущность, класс которой указан в className
+Если передана строка типа tag.blockName<pug.variables>{__tag.elementName<pug.variables>_modifierName<colors>} tab.blockName<> 
+или numberOfBlock{__tab.elementName<> _modifierName<colors>} 
+то строка будет разбита и созданы (если не существуют) блок элемент и модификатор с переменными.
+*/
+const c                               = require(`${__dirname}/constants.js`);
+const createBEMFiles                  = require(`${__dirname}/createBEMFiles.js`);
+const readFromFile                    = require(`${__dirname}/readFromFile.js`);
+const writeToFile                     = require(`${__dirname}/writeToFile.js`);
+const returnStringForImport           = require(`${__dirname}/returnStringForImport.js`);
+const createWritingIfItIsntInFIle     = require(`${__dirname}/createWritingIfItIsntInFIle.js`);
+const returnBEMObjecstArray           = require(`${__dirname}/returnBEMObjectsArray.js`);
+const divisionOnParts                 = require(`${__dirname}/divisionOnTagsNamesTypesVariables.js`);
+const returnPugContent                = require(`${__dirname}/returnPugContent.js`);
+const returnScssContent               = require(`${__dirname}/returnScssContent.js`);
+const returnJSContent                 = require(`${__dirname}/returnJSContent.js`);
 
-module.exports = {
-  import obj from './classes';
-  createForBEMBD(bemEntity){
-    let isNeedToCreate = true;
-    this.blocksArr.forEach(block=>{//проверка на наличие блока с таким именем в массиве блоков
-      isNeedToCreate = (block.title == bemEntity)? false: isNeedToCreate;
+
+const _create = function (str, className){
+  if(className && className.toLowerCase() == 'page'){// Если указанно, что это страница, значит делаем страницу.
+    createBEMFiles(c.PATH_TO_PAGES_DIR,str,{
+      pug : `html(lang="ru")\n  head\n    meta(charset = "utf-8")\n    meta(name="viewport", content="initial-scale=1.0, width=device-width")\n    title ${str}\n    +favicon()\n  body`,
+      scss: `/* common styles */\n@import "../../styles/allCommonStyles";\n\n/* Block styles */`,
+      js  : `import './${str}.scss';\nimport '../../JS-components/libs.js';\nimport '../../blocks/header/header.js';`,
+    });
+    let existedPages = require(c.PATH_TO_PAGES_ARRAY);
+    if( existedPages.includes(str) ){return ;}
+    else{
+      existedPages.push(str);
+      let newWriting = ``;
+      existedPages.forEach(page=>{newWriting += `  '${page}',\n`;});
+      let msg = `module.exports = [\n${newWriting}]`;
+      writeToFile(c.PATH_TO_PAGES_ARRAY, msg);
+    }
+  }else{//Если не указанно, что это странница, значит будем делать блок (или что-то другое)
+    createBEMEntites(str);
+  }
+
+  /*createBEMEntities(str) (функция должна быть частью _create т.к. тут использует this.blocks)
+  данная функция принимает строку, которую разбивает и создаёт в соотвествии с синтаксисом сущности БЭМ
+  Синтаксис - tag.blockName<pug.variables>{__tag.elementName<pug.variables>_modifierName<colors>} tab.blockName<> 
+  или numberOfBlock{__tab.elementName<> _modifierName<colors>} 
+  */
+  function createBEMEntites(str){
+    let bemObjs = returnBEMObjecstArray(str);
+    bemObjs.forEach(bemo=>{
+      console.log(`bemo.title = ${bemo.title}`);
     })
-    // let file = `${this.destination}/${bemEntity}/${bemEntity}`;
-    //Вначале попробовал указать путь, как в верху указанно, но в windows разделителем
-    //Директорий является \, а в ubuntu / Пришлось искать универсальный путь, используя path
-    let file = path.join(this.destination, bemEntity, bemEntity);
-    let pugFile = `${file}.pug`;
-    let scssFile = `${file}.scss`;
-    let defaultPugVariablesText = `if modifier == undefined\n    - modifier = {}\n    `;
-    let pugFileText = `mixin ${bemEntity}(modifier)\n  .${bemEntity}&attributes(attributes)\n    ${defaultPugVariablesText}`;
-    let scssFileText = `.${bemEntity}{\n  \n}`;
-
-    if(isNeedToCreate){
-      try {
-        createFolder(this.destination,bemEntity);
-        writeToFile(pugFile, pugFileText);
-        writeToFile(scssFile, scssFileText);
-        this.blocksArr.push( new obj.Block(bemEntity) );
-      }
-      catch(err){
-        if (err.errno == (-4075) )
-          console.log(`---error in create module\n---${bemEntity} file already exists in folder\n`);
-        else
-          console.log(`---error in create module\n---${err}\n${JSON.stringify(err)}\n`);
-      }
-    }else
-      console.log(`---error in create module\n---block named "${bemEntity}" is already exist in array blocksArr, so stop it baby.\n`);
-    },
-    createForBlock(bemEntity){
-      let isNeedToCreate = true;
-      let forbidenPlace = 0;
-      let summedArr = this.elements.concat(this.modifications)
-      summedArr.forEach((element,index)=>{//проверка на наличие сущности с таким именем в массивах элементов и модификаторов
-        isNeedToCreate = (element.title == bemEntity)? false: isNeedToCreate;
-        forbidenPlace = index;
-      })
-      let fullFileName = `${this.title}${bemEntity}`;
-      let file = `${this.destination}\\${bemEntity}\\${fullFileName}`;
-      let pugFile = `${file}.pug`;
-      let scssFile = `${file}.scss`;
-      
-      let pugFileText = `mixin ${fullFileName}(modifier)\n  .${fullFileName}&attributes(attributes)\n    `;
-      let scssFileText = `.${fullFileName}{\n  \n}`;
-
-      if(isNeedToCreate){
-        try {
-          createFolder(this.destination,`${bemEntity}`)
-          writeToFile(this.destination, pugFile, pugFileText)
-          let isNeedToCreatePUGFile = ask(`Is need to create PUG file ? 1/0`);
-          if(isNeedToCreatePUGFile)
-            writeToFile(this.destination, pugFile, pugFileText);
-          if(isModifier(bemEntity))
-            this.modifications.push(new cl.Modification(bemEntity));
-          if(isElement(bemEntity))
-            this.elements.push(new cl.Element(bemEntity));
-        }
-        catch(err){console.log(`>>>>>>>>>>>\nerror in create module\n\n${err}\n>>>>>>>>>>>`);}
-      }else{
-        console.log(`>>>>>>>>>>>>>>>>\nelement named "${bemEntity}" is already exist, so stop it baby.\nBy the way it take place : ${forbidenPlace}`);
-      }
-    },
-    createForElement(bemEntity){
-      let isNeedToCreate = true;
-      let forbidenPlace = 0;
-      this.modifications.forEach((modification,index)=>{//проверка на наличие сущности с таким именем в массивах элементов и модификаторов
-        isNeedToCreate = (modification.title == bemEntity)? false: isNeedToCreate;
-        forbidenPlace = index;
-      })
-      let fullFileName = `${this.parentName}${this.title}${bemEntity}`;
-      let file = `${this.destination}\\${bemEntity}\\${fullFileName}`;
-      let scssFile = `${file}.scss`;
-      
-      let scssFileText = `.${fullFileName}{\n  \n}`;
-
-      if(isNeedToCreate){
-        try {
-          createFolder(this.destination,`${bemEntity}`)
-        }
-        catch(err){console.log(`>>>>>>>>>>>\nerror in create module\n\n${err}\n>>>>>>>>>>>`);}
-      }else{
-        console.log(`>>>>>>>>>>>>>>>>\nmodification named "${bemEntity}" is already exist, so stop it baby.\nBy the way it take place : ${forbidenPlace}`);
-      }
-    },
-    createForModification(bemEntity){},//Переопределяем метод create для модификатора, чтобы в дальнейшем не выходило сообщение, что метод не переопределён.
+  }
 };
 
-
-// let isNeedToCreate = true;
-//   this.blocksArr.forEach(block=>{//проверка на наличие блока с таким именем в массиве блоков
-//     isNeedToCreate = (block.title == bemEntity)? false: isNeedToCreate;
-//   })
-//   let pugFile = `${bemEntity}\\${bemEntity}.pug`;
-//   let scssFile = `${bemEntity}\\${bemEntity}.scss`;
-//   let pugFileText = "mixin " + bemEntity + "(modifier)\n  ";
-//   let scssFileText = `.${bemEntity}{\n  \n}`;
-
-//   if(isNeedToCreate){
-//     try {
-//       createFolder(this.destination,`${bemEntity}`)
-//       writeToFile(this.destination, pugFile, pugFileText)
-//       writeToFile(this.destination, scssFile, scssFileText);
-  
-//       this.blocksArr.push(new cl.Block(bemEntity));
-//     }
-//     catch(err){console.log(`>>>>>>>>>>>\nerror in create module\n\n${err}\n>>>>>>>>>>>`);}
-//   }else
-//     console.log(`>>>>>>>>>>>>>>>>\nblock named "${bemEntity}" is already exist, so stop it baby.`);  
+module.exports = _create;

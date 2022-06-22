@@ -11,11 +11,11 @@ const returnBEMObjectsArray = function (str){
   else if(!(~openCurlyBracketPos) && ~spacePos){return str.split(' ').map(obj=> {return {title: obj} })}//Если нет фигурных скобочек но есть пробелы
   else if(~openCurlyBracketPos && !(~spacePos)){return [{title: str.slice(0,str.slice(str.indexOf('{'))), inner: str.slice(str.indexOf('{')+1)} ]}//Если есть фигурные скобочки но нет пробелов
   else if(~openCurlyBracketPos && ~spacePos){//Если есть фигурные скобочки и пробелы
-    let bemObjects = []
+    let bemObjects = [];
     for(let index=0; index < str.length; index ++){
       let char = str[index];
       if (char =='{') {//Если цикл наткнулся на открывающуюся скобочку, значит определяем title и находим закрывающую скобочку это и будет inner
-        if (str.includes('}') ) {//раз есть открывающая скобочка то должна быть и закрывающая иначе обшибка
+        if (str.includes('}') ) {//раз есть открывающая скобочка (см условие выше) то должна быть и закрывающая иначе обшибка
           openCurlyBracketPos = index;//Каждую итерацию цикла мы будем определять мы будем заного определять openCurlyBrackets, на случай, если там несколько открывающихся скобочек.
           let closedCurlyBracketPos = str.indexOf('}');
           let title = str.slice(0,openCurlyBracketPos);
@@ -27,11 +27,11 @@ const returnBEMObjectsArray = function (str){
         }else{console.log(`>>> Ошибка в функции returnBEMStringsArray, строка :\n${str}\nне соотвевтсвует синтаксису`);}
       }else{
         if(char ==' '){//Если наткнулись на пробел Значит позади находится title это не может быть пробел после { т.к. после закрывающей скобочки мы проскакиваем два символа, чтобы проглатить пробел после {
-          let spaceIndex = index
           let title = str.slice(0,index);
           bemObjects.push({title: title});
 
-          str=( (index + 1) < str.length)? str.slice(index + 1): str.slice(index)
+          str=( (index + 1) < str.length)? str.slice(index + 1): str.slice(index);
+          index = 0;
         }
       }
     }
