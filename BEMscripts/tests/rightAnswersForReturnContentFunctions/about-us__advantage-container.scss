@@ -1,0 +1,11 @@
+.about-us__advantage-container {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 18px;
+  margin-bottom: 48px;
+
+  @media (max-width: $md - 1px) {
+    padding-right: 7px;
+    margin-bottom: 42px;
+  }
+}

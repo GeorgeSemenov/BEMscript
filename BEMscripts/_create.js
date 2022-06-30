@@ -25,14 +25,14 @@ const _create = function (str, className){
       scss: `/* common styles */\n@import "../../styles/allCommonStyles";\n\n/* Block styles */`,
       js  : `import './${str}.scss';\nimport '../../JS-components/libs.js';\nimport '../../blocks/header/header.js';`,
     });
-    let existedPages = require(c.PATH_TO_PAGES_ARRAY);
+    let existedPages = require(c.PATH_TO_PAGES_ARRAY_FILE);
     if( existedPages.includes(str) ){return ;}
     else{
       existedPages.push(str);
       let newWriting = ``;
       existedPages.forEach(page=>{newWriting += `  '${page}',\n`;});
       let msg = `module.exports = [\n${newWriting}]`;
-      writeToFile(c.PATH_TO_PAGES_ARRAY, msg);
+      writeToFile(c.PATH_TO_PAGES_ARRAY_FILE, msg);
     }
   }else{//Если не указанно, что это странница, значит будем делать блок (или что-то другое)
     createBEMEntites(str);
@@ -45,8 +45,38 @@ const _create = function (str, className){
   */
   function createBEMEntites(str){
     let bemObjs = returnBEMObjecstArray(str);
+    let block;
     bemObjs.forEach(bemo=>{
-      console.log(`bemo.title = ${bemo.title}`);
+      /*Первым делом будем искать block если существует или создавать, если не существует*/
+      if(isFinite(bemo.title)){
+        /*Если часть отвечающая за блок явялется числом*/
+        if((+bemo.title < this.blocks.length) && (+bemo.title>= 0)){
+          /*Если указанный номер блока находится внутри массива блоков*/
+          block = this.blocks(bemo.title);
+        }else{console.log(`\n>>>Ошибка\nУказан неверный номер блока - ${bemo.title}\nВведите номер блока от 0 до ${this.blocks.length}\n\n`);}/*Если указанный номер блока не принадлежит массиву.*/
+      }else{/*Если часть отвечающая за блок явялется строкой*/
+        let blockObj = divisionOnParts(bemo.title,true);
+        let matchedBlock = this.blocks.find((bl)=>{/*Если блок уже содержится в массиве всех блоков, то matchedBlock будет содержать этот блок*/
+          if(bl.title == blockObj.blockName){return true}
+        })
+        if(matchedBlock){block = matchedBlock}
+        else{/*блок является строкой и его нет среди созданных блоков в this.block => надо создать новый блок*/
+          createBEMFiles(pathToBlocks,bemo.title, {
+            pug: returnPugContent(blockObj),
+            scss: returnScssContent(blockObj),
+            js: returnJSContent(blockObj)
+          });
+          this.blocks.push(new Block(blockObj.blockName) )
+          /*Создаём записи о созданном блоке в файле, где хранятся импорты ко всем блокам*/
+          createWritingIfItIsntInFIle(returnStringForImport(`pug`, `blockToAllblocksContainer`, blockObj.blockName) , `${c.PATH_TO_ALLBLOCKS_DIR}/allBlocks.pug`,`bottom`)
+          createWritingIfItIsntInFIle(returnStringForImport(`scss`, `blockToAllblocksContainer`, blockObj.blockName) , `${c.PATH_TO_ALLBLOCKS_DIR}/allBlocks.scss`,`bottom`)
+          createWritingIfItIsntInFIle(returnStringForImport(`js`, `blockToAllblocksContainer`, blockObj.blockName) , `${c.PATH_TO_ALLBLOCKS_DIR}/allBlocks.js`,`bottom`)
+
+          // Создаём переменные: 
+          createWritingIfItIsntInFIle(`$${blockObj}--Color = $black`, c.PATH_TO_COLORS_FILE, "bottom");//для цвета шрифта
+          createWritingIfItIsntInFIle(`$${blockObj}--BGColor = $transparent`, c.PATH_TO_COLORS_FILE, "bottom");//для цвета фона
+        }
+      }
     })
   }
 };

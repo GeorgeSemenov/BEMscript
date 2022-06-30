@@ -17,8 +17,11 @@ const v = {
   SHOW_ELEMENT_PRE_SYMBOL                 : '>>',
   SHOW_MODIFICATIONS_PRE_SYMBOLS          : '>>',
 
+  PATH_TO_BLOCKS_DIR                      : `${__dirname}/tests/folderForTestingCreate/blocks`, /*Папка где находятся блоки*/
   PATH_TO_PAGES_DIR                       : `${__dirname}/tests/test-pages`,
-  PATH_TO_PAGES_ARRAY                     : `${__dirname}/tests/testPagesArray.js`,
+  PATH_TO_ALLBLOCKS_DIR                   : `${__dirname}/tests/test-pages`,/*Папка где находятся файлы allBlocks.pug*/
+  PATH_TO_PAGES_ARRAY_FILE                : `${__dirname}/tests/testPagesArray.js`,
+  PATH_TO_COLORS_FILE                     : `${__dirname}/tests/testPagesArray/colors.scss`,
 };
 
 module.exports = v;

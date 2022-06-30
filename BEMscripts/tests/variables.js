@@ -1,4 +1,9 @@
-const cl = require('./../classes.js');
+const cl             = require(`${__dirname}/../classes.js`);
+const c              = require(`${__dirname}/../constants.js`);
+const readFromFile   = require(`${__dirname}/../readFromFile.js`);
+const getFolders     = require(`${__dirname}/../getFolders.js`);
+const getFiles       = require(`${__dirname}/../getFiles.js`);
+
 let mod1             = new cl.Modificator('_модификатор№1')
 let mod2             = new cl.Modificator('_модификатор№2')
 let mod3             = new cl.Modificator('_модификатор№3')
@@ -141,6 +146,33 @@ let syntaxRequests = [
     ],
   },
 ]
+
+let createTestStrings = [
+  {
+    testString: `blockName1{__elementName}`,/*Должна создаться папка blockName1 и в ней должен быть файлы с этим именем и содержимым*/
+    rightAnswerForCreateBlockOnly: function(){
+      if(getFolders(c.PATH_TO_BLOCKS_DIR).includes(`blockName1`) ){console.log(`Папка созданна`);}//проверяем созданна ли папка
+      else{console.log(`\n\n>>>Абшибка папка не созданна\n\n`);}
+
+      files = getFiles(`${c.PATH_TO_BLOCKS_DIR}/blockName1`);
+      if(files.includes(`blockName1.pug`)){/*Проверяем созданн ли pug файл*/
+        console.log(`pug файл создан`);
+        let data = readFromFile(`${c.PATH_TO_BLOCKS_DIR}/blockName1/blockName1.pug`)
+        let comparedString = `mixin blockName1(modifier)\n  if modifier == undefined\n    - modifier = {};\n  .blockName1&attributes(attributes)\n`;//Этот контент должен быть в pug файле
+        if(data == comparedString){console.log(`Файл blockName1.pug созданн корректно`);}//Если содержимое корректное то всё хорошо
+        else{console.log(`\n\n>>>Абшибка pug файл наполненн некорректно\n\n`);}
+      }
+      if(files.includes(`blockName1.scss`)){/*Проверяем созданн ли scss файл*/
+        console.log(`scss файл создан`);
+        let data = readFromFile(`${c.PATH_TO_BLOCKS_DIR}/blockName1/blockName1.scss`)
+        let comparedString = `.blockName1{\n  background-color: $blockName1--BGColor;\n  color: $blockName1--Color;\n}`
+        if(data == comparedString){console.log(`Файл blockName1.scss созданн корректно`);}//Если содержимое корректное то всё хорошо
+        else{console.log(`\n\n>>>Абшибка scss файл наполненн некорректно\n\n`);}
+      }
+    },
+  }
+]
+
 let BEMStrings = [
   {
     str:`tag__elementName_modificatorName<variables>`,
@@ -413,65 +445,107 @@ let objectsForTestingGetFilesContentFunctions = [
       blockName: `about-us`,
       tag: 'aside',
     },
+    rightAnswer:{
+      fileName: `about-us`,
+      pugContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/about-us.pug`),
+      scssContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/about-us.scss`),
+      jsContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/about-us.js`),
+    },
     blockName:undefined
   },
-  {
-    ruleObj:{
-      elementName: `__lists`,
-      arrObj:{
-        arrName: `listsArr`,
-        arrItemName: `list`,
-        mixement: `listMixement`
-      }
-    },
-    blockName:`differentiators`
-  },
-  {
-    ruleObj:{
-      elementName: `__advantage-container`,
-      arrObj:{
-        arrName: `advantagesArr`,
-        arrItemName: `advantage`,
-        mixement: `advantage`
-      }
-    },
-    blockName:`about-us`
-  },
-  {
-    ruleObj:{
-      elementName: `__description`,
-      variables:["description","title"],
-      tag: 'p',
-    },
-    blockName:`text-field`
-  },
-  {
-    ruleObj:{
-      elementName: `__description`,
-      modificatorName: "_modification",
-      variables:["description","title"],
-      tag: 'p',
-    },
-    blockName:`text-field`,
-    type: `modificator`,
-  },
-  {
-    ruleObj:{
-      modificatorName: `_modurficontions`,
-      variables:["description","title"],
-      tag: 'p',
-    },
-    blockName:`text-field`,
-    type: `modificator`,
-  },
-  {
-    ruleObj:{
-      variables:["description","title"],
-      tag: 'p',
-      mixinName: "somiMixin",
-    },
-    blockName:`text-field`,
-  },
+  // {
+  //   ruleObj:{
+  //     elementName: `__lists`,
+  //     arrObj:{
+  //       arrName: `listsArr`,
+  //       arrItemName: `list`,
+  //       mixement: `listMixement`
+  //     }
+  //   },
+  //   rightAnswer:{
+  //     fileName: `differentiators__lists`,
+  //     pugContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.pug`),
+  //     scssContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.scss`),
+  //     jsContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.js`),
+  //   },
+  //   blockName:`differentiators`
+  // },
+  // {
+  //   ruleObj:{
+  //     elementName: `__advantage-container`,
+  //     arrObj:{
+  //       arrName: `advantagesArr`,
+  //       arrItemName: `advantage`,
+  //       mixement: `advantage`
+  //     }
+  //   },
+  //   rightAnswer:{
+  //     fileName: `about-us__advantage-container`,
+  //     pugContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.pug`),
+  //     scssContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.scss`),
+  //     jsContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.js`),
+  //   },
+  //   blockName:`about-us`
+  // },
+  // {
+  //   ruleObj:{
+  //     elementName: `__description`,
+  //     variables:["description","title"],
+  //     tag: 'p',
+  //   },
+  //   rightAnswer:{
+  //     fileName: `text-field__description`,
+  //     pugContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.pug`),
+  //     scssContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.scss`),
+  //     jsContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.js`),
+  //   },
+  //   blockName:`text-field`
+  // },
+  // {
+  //   ruleObj:{
+  //     elementName: `__description`,
+  //     modificatorName: "_modification",
+  //     variables:["description","title"],
+  //     tag: 'p',
+  //   },
+  //   rightAnswer:{
+  //     fileName: `text-field__description`,
+  //     pugContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.pug`),
+  //     scssContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.scss`),
+  //     jsContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.js`),
+  //   },
+  //   blockName:`text-field`,
+  //   type: `modificator`,
+  // },
+  // {
+  //   ruleObj:{
+  //     modificatorName: `_modurficontions`,
+  //     variables:["description","title"],
+  //     tag: 'p',
+  //   },
+  //   rightAnswer:{
+  //     fileName: `text-field_modurficontions`,
+  //     pugContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.pug`),
+  //     scssContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.scss`),
+  //     jsContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.js`),
+  //   },
+  //   blockName:`text-field`,
+  //   type: `modificator`,
+  // },
+  // {
+  //   ruleObj:{
+  //     variables:["description","title"],
+  //     tag: 'p',
+  //     mixinName: "somiMixin",
+  //   },
+  //   rightAnswer:{
+  //     fileName: ``,
+  //     pugContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.pug`),
+  //     scssContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.scss`),
+  //     jsContent: readFromFile(`${__dirname}/rightAnswersForReturnContentFunctions/${this.fileName}.js`),
+  //   },
+  //   blockName:`text-field`,
+  // },
 ]
 
 module.exports = {
@@ -484,7 +558,7 @@ module.exports = {
     '111',
     'imposibru__ololo',
   ],
-  bembdReleased, 
+  bembdReleased, /*заполненная база данных*/
   syntaxRequests,
   BEMStrings,
   imports,

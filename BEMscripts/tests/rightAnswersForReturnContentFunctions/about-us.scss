@@ -1,0 +1,16 @@
+@import '__advantage/about-us__advantage';
+@import '__title/about-us__title';
+@import '__advantage-container/about-us__advantage-container';
+@import '__text/about-us__text';
+@import '__content/about-us__content';
+@import '../advantage/advantage';
+@import '../title/title';
+@import '../link/link';
+.about-us {
+  max-width: 300px;
+  @media (max-width: $md - 1px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,5 @@
+mixin text-field__description(modifier)
+  if modifier["description"] == undefined
+    - modifier["description"] = "empty__description";
+  p.text-field__description&attributes(attributes)!=modifier.description
+

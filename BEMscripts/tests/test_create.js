@@ -9,7 +9,17 @@ console.log(`*********************************************************\n********
 // create(`newPage1`, 'PAGE');
 // create(`newPage5`, 'PAGE');
 
-console.log(`Создаём сущности`);
+let BD = v.bembdReleased;
+BD.create = create;
+
+console.log(`Создаём сучности`);
 v.syntaxRequests.forEach(request =>{
-  create(request);
+  BD.create(request.sentence);
+  /*
+    Перед началом теста убедиться, что в папке, которая находится по пути v.PATH_TO_ALLBLOCKS_DIR находится лишь пустая папка blocks
+    Если блок - число - должно вывестись его json (если есть в массиве, если нет, то сообщение об ошибке)
+    Если блок строка - 
+      Если есть в массиве blocks - выводится его Json
+      Если нет в массиве blocks - создаются файлы в PATH_TO_ALLBLOCKS_DIR и выводится их содержимое в Json (pug + scss + js)
+  */
 })

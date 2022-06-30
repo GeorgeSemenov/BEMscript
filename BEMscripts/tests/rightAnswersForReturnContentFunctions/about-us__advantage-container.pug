@@ -1,0 +1,6 @@
+mixin about-us__advantage-container(modifier)
+  if modifier["advantagesArr"] == undefined
+    - modifier["advantagesArr"] = {number: "empty__advantagesArr"};
+  .about-us__advantage-container&attributes(attributes)
+    each advantage in modifier.advantagesArr
+      +advantage(advantage)(class="about-us__advantage")
