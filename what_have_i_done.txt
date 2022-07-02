@@ -1,3 +1,4 @@
+(неопрошенные - вордпресс, wordpress, vue, nodeJS, recruitment)
 Запросы в телеграме:
 html jobs
 html work
@@ -10,62 +11,103 @@ frontend
 web job
 
 remote job
-(remote offers)
+remote offers
+remote frontend
+remote html
+part time job
+frontend projects
+frontend freelance
+frontend offers
+remote offers chat
+remote frontend chat
+remote html chat
+part time job chat
+frontend projects chat
+frontend freelance chat
+frontend offers
+html freelance
+frontend CV
+html CV
+html offers
+freelance work
+frontend hr
+html hr
+react job
+react jobs
+react remote
+react projects
+react freelance
+react CV
+react offers
+js hr
+js job
+js jobs
+js remote
+js projects - c этого момента я перестал записывать, т.к. устал
+js freelance
+js CV
+js hr
+js offers
+javaScript hr
+javaScript job
+javaScript jobs
+javaScript remote
+javaScript projects
+javaScript freelance
+javaScript CV
+javaScript hr
+javaScript offers
+IT job
+IT jobs
+IT remote
+IT projects
+IT freelance
+IT CV
+IT hr
+IT offers
+html remote
+html projects
+html freelance
+html CV
+html hr
+html offers
+junior
+junior job
+junior jobs
+junior remote
+junior projects
+junior freelance
+junior CV
+junior hr
+junior offers
+frontend
+frontend remote
+frontend projects
+frontend freelance
+frontend CV
+frontend hr
+frontend offers
+фронтенд
+фронтенд работа
+фронтенд удалёнка
+фронтенд удалённо
+фронтенд удалённая работа
+фронтенд проекты
+фронтенд фриланс
+фронтенд резюме
+фронтенд вакансии
+фронтенд кадры
+джуниор
+джуниор работа
 
-(remote frontend)
-(remote html)
-(part time job)
-(frontend projects)
-(frontend freelance)
-(frontend offers)
-(remote offers chat)
-(remote frontend chat)
-(remote html chat)
-(part time job chat)
-(frontend projects chat)
-(frontend freelance chat)
-(frontend offers)
-(html freelance)
-(frontend CV)
-(html CV)
-(html offers)
-(freelance work)
-(frontend hr)
-(html hr)
-(react job)
-(react jobs)
-(react remote)
-(react projects)
-(react freelance)
-(react CV)
-(react offers)
-(js hr)
-(js job)
-(js jobs)
-(js remote)
-(js projects)
-(js freelance)
-(js CV)
-(js hr)
-(js offers)
-(IT job)
-(IT jobs)
-(IT remote)
-(IT projects)
-(IT freelance)
-(IT CV)
-(IT hr)
-(IT offers)
-(фронтенд)
-(фронтенд работа)
-(фронтенд удалёнка)
-(фронтенд удалённо)
-(фронтенд удалённая работа)
-(фронтенд проекты)
-(фронтенд фриланс)
-(фронтенд резюме)
-(фронтенд вакансии)
-(фронтенд кадры)
+(джуниор удалёнка)
+(джуниор удалённо)
+(джуниор удалённая работа)
+(джуниор проекты)
+(джуниор фриланс)
+(джуниор резюме)
+(джуниор вакансии)
+(джуниор кадры)
 (вёрстка)
 (вёрстка работа)
 (вёрстка удалёнка)
@@ -215,9 +257,123 @@ https://t.me/it_remotes_jobs - ссылка на другой телеграм �
 https://t.me/remote_job - мёртвая группа
 https://t.me/remote_jobs - переехали
 https://t.me/remote_job3 - работа по администрированию телеграмм каналов
+https://t.me/frontend_remote_jobs - Просто ссылка на другой телеграм канал
+https://t.me/topremote_frontend - на английском, нет проектов только на фул тайм.
+https://t.me/findfrontendjobs - переезд в другую страну.
+https://t.me/remote_jobs_frontend - бот
+https://t.me/rmtdevelop - учебник по алгебре ... 
+https://t.me/SgPartTimeAgency - проектная работа, но для верстальщика, да и для фронтендера не нашёл ничего.
+https://t.me/JobsPartTimer - тоже самое, что и https://t.me/SgPartTimeAgency
+https://t.me/workinuae2 - проектная работа для работников кухни, и вакансии для официантов.
+https://t.me/singaporeparttimejobs - проектная работа в сингапуре для работников кухни и разносчико фалеров.
+https://t.me/JobHitchpt - канал по проектной работе для студентов, по вёрстке и фронтенду ничего не нашёл.
+https://t.me/job_part_time - нет записей с 6 февраля 2020 года
+https://t.me/part_job_time - опросник.
+https://t.me/Part_time_job - всё на китайском, ничего не понятно.
+https://t.me/frontend_project - Тут дают советы по фронтэнду (не очень)
+https://t.me/frontendprojects05 - советы по фронтенду 34 участника
+https://t.me/html_css_js_frontend_projects - Советы по вёрстке
+https://t.me/frontEnd_Projects - советы по вёрстке
+https://t.me/frontend_project_muhokama - опять советы по вёрстке
+Bu @Frontendtilibot Dasturlash tili tekin oson o'rganish imkoniyati 🧑🏻‍💻 - ботяра
+https://t.me/projects_frontend - нет ни записей ни участников
+https://t.me/Freelancer_FrontEnd - канал неактивна
+@Frontend_Freelancer_UpWork - это вообще какой-то чувак или чувиха.
+@Frontend_freelancerr - чувачелло.
+https://t.me/seo_sem - всё на датском, непонятно ничегошеньки
+https://t.me/ogloszeniaseosem - 9 участинков, малоакивный канал
+https://t.me/frontend_kvn - 1 участник
+@TUANTQ_KDVNHTCCN_HTMLPFS_CVC - чувачелло
+https://t.me/gfhhvfd - что-то про аллиэкспресс
+https://t.me/html_academy_proekt_na_jav - сливы курсов
+https://t.me/remote_work_freelance1 - низкоквалифицированный заработок (шляпа)
+https://t.me/CG_freelance - канал с фриланс проектами для художников
+https://t.me/work_freelance - неактивный канал
+https://t.me/WORKL_FREELANCE - странные вакансии про косметику.
+https://t.me/frontend_hranilishche - тут просто книжки
+https://t.me/frontendbase - сборник литературы
+https://t.me/HTMLBunkerCroatia - неактивный канал с 2019 года 3 подписчика.
+https://t.me/hrushi_mudiraj - пустой канал.
+https://t.me/js_jobs_vakansii - ссылка на другой канал
+https://t.me/react_native_js3 - ссылка на другой канал
+https://t.me/react_native_jobs1 - ссылка на другой канал.
+https://t.me/react_job - неактивный канал с мая 2021
+https://t.me/jobs_react - неактивный канал с ноября 2018
+https://t.me/react_jobs - неактивный канал с ноября 2018
+https://t.me/js_jobs_vakansii - ссылка на другой канал
+https://t.me/react_native_js3 - ссылка на другой канал
+https://t.me/react_native_jobs1 - ссылка на др канал.
+https://t.me/jobs_react - неактивный канал
+https://t.me/react_jobs - неактивно
+https://t.me/jobs_reactjs - неактивно
+https://t.me/React_Rote_Jobs - 2 участника
+https://t.me/remote_jobs_react - неактивный канал с января 2019
+https://t.me/rubyonrailsjobs - руби? это не помне
+https://t.me/reactjsjobs23 - 89 участников, всё на онглийском, хотя работы есть. ...
+https://t.me/freelancereactjs - пусто.
+https://t.me/projects_in_js_reactjs - неактивно с октября 2021
+https://t.me/reactprojects - пустой канал.
+https://t.me/reactprojectsa - uzbek tilida - вакансий нет.
+https://t.me/AaronCode99ReactProjects - неактивен с марта
+https://t.me/exponinza - неактивен с мая, 5 подписчиков.  
+https://t.me/reactjsnodejsfreelancer - одна запись 2021 года.
+https://t.me/reactjsforfreshers - пусто
+https://t.me/freelancer_web_Development - реклама мужика
+https://t.me/divyanshrathoree - курс по реакту
+https://t.me/reactnative_devs - работы почти нет.
+https://t.me/cv19vaccine_reactions - реакция на ваксину ковидную.
+https://t.me/jsjobs - неактивен.
+https://t.me/nextjs_jobs_chat - ссылка на другой чат
+https://t.me/nuxtjs_jobs_chat - ссылка 
 
 
 
 Чаты 
->>>> https://t.me/rejobit - Чат где можно опубликовать резюме (присоединился)
+https://t.me/jobs_part_time - всякая всячина, резюме публикуются платно.
+https://t.me/Avengerstre - чат с проектными работами, которые требуют низкую квалификацию.Боюсь для меня там нет ничего. (на английском)
+https://t.me/frontcoderenglishjs - 4 участника одна запись
+https://t.me/frontend_freelancer - флудилка с 4 участниками
+https://t.me/freelancersfrontendbr - 127 участников часть работ на испанском остальная часть не про фронтенд.
+https://t.me/FreelancersAcademy_FrontEnd - 7 участников группа малоактивна
+https://t.me/cv_resume_agent - 7 участников, записей нет с прошлого года 
+https://t.me/freelance_work1 - чат с низкоквалифицированной работой.
+https://t.me/HTMLBunker_Croatia - неактивная группа 3 подписчика
+https://t.me/react_native_projects - пусто, создан недавно.
+https://t.me/pythoReact_developer- нету по фронтенду и вёрстке ничего(хотя может я плохо искал.)
 
+
+>!!!<
+куда ступил - каналы
+https://t.me/Workesss - вроде что-то есть хорошее, надо мониторить.
+> варпкансии - https://t.me/job_react - зарплаты по react от 150 т.р. мне пока рановато там работать, но пусть будет в группе варпкансии
+> варпкансии https://t.me/javascriptjobjs - может что-то и найдётся.
+https://t.me/Cvflow - можно оставлять своё резюме, если написать @goldberrytoad
+> варпкансии https://t.me/hr_itwork - вроде есть несложные вакансии.
+> варпкансии для джунов https://t.me/junior_vacancies
+> варпкансии https://t.me/job_frontend - есть для джунов
+> варпкансии
+
+Куда вступил чаты
+>>>> https://t.me/rejobit - Чат где можно опубликовать резюме (присоединился)
+>>>>https://t.me/frontend_freelance - 4 участника, но на безрыбье и рак обувь.
+>>>>https://t.me/frontendo - сомнительная шарага, но попрбовать стоит (46 участников)
+>>>>https://t.me/freelance_workpro - фриланс биржа, нужно попрбоовать оставлять тут своё резюме
+>>>>https://t.me/freelance_work - ещё одна биржа, тут можно оставлять резюме.
+>>>>https://t.me/freelance_work_vacancy - хоть это и канал, тут можно оставлять раз в день бесплатно, для этого нужно написать @argentinayamayka
+>>hr@hpace.ru надо написать сюда =) 
+
+Команда Андрея - >>https://t.me/hpace_freelance - заказы фриланс
+https://t.me/reactjs_jobs - есть русскоговорящие, которые оставляют резюме на русском, но возможно мне стоит его сделать на онглийском.
+>>>> https://t.me/javascript_jobs - нужно присмотреться, наверняка есть что-то хорошее.
+>>>> https://t.me/jsspeak - оставляй резюме
+>>>>https://t.me/IT_jobs_group - всякие вакансии, можно выложить своё резюме.
+>>>>https://t.me/jobs_it - тоже можно оставлять своё резюме
+>>>>https://t.me/hiring_relocatin_hr_it - сюда бросают свои резюме, хоть это и не разрешенно, надо тоже попробовать.
+>>>>
+>>>>
+
+> в варпкансии https://t.me/react_native_jobs - тут не оставляют резюме но есть вакансии по реакту.
+
+> в варпаксии https://t.me/react_job_chat - реакт, хорошие вакансии с высокими зарплатами, но и ожидание будь здоров.
+
+> в варпкансии - https://t.me/react_js_jobs - тут есть несложные работёнки
