@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
     "html2pug": "^4.0.0",
     "png-to-svg": "^1.0.5",
     "potrace": "^2.1.8",
