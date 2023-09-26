@@ -1,4 +1,5 @@
 //https://github.com/h2non/audioconcat#readme
+//Нужно опопробовать установтьи ffmpeg с оф сайта , ну или на ubuntu запустить без этой установки
 const audioconcat = require("audioconcat");
 const ffmpeg = require("fluent-ffmpeg");
 
