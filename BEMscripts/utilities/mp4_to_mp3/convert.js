@@ -8,7 +8,7 @@ ffmpeg(fileName)
   .toFormat("mp3")
   .saveToFile(saveToFileName, (stdout, stderr) => {})
   .on("error", (err) => {
-    console.log(err);
+    console.warn(err);
   })
   .on("progress", (pr) => {
     console.log(`total file time = ${pr.timemark}`);
