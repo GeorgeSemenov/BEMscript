@@ -10,6 +10,7 @@ const fs = require("fs");
 const files = [];
 
 const folderPath = "./";
+const regExFilesExtension = /\.mp3$/gi;
 
 //Собираем список фильмов.
 fs.readdir(folderPath, function (err, files) {
@@ -17,7 +18,12 @@ fs.readdir(folderPath, function (err, files) {
     console.error(err);
     return;
   }
-  console.log(files);
+
+  let arr = files.filter((file) => {
+    console.log(`file = ${file}, test = ${regExFilesExtension.test(file)}`);
+    return regExFilesExtension.test(file);
+  });
+  console.log("after", arr, files);
 });
 
 // const arrLength = 24; //по умолчанию 5
