@@ -2,8 +2,8 @@
 //npm i get-audio-duration
 //Для работы этого скрипта нужно установить mp3-cutter и get-audio-duration
 
-const MP3Cutter = require("mp3-cutter");
-const { getAudioDurationInSeconds } = require("get-audio-duration");
+import MP3Cutter from "mp3-cutter";
+import { getAudioDurationInSeconds } from "get-audio-duration";
 
 const originalFileName = "orig.mp3";
 let audioPartPrefixName = "segment";
