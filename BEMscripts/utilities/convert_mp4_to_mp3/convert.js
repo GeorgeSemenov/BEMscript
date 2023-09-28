@@ -1,11 +1,8 @@
 //https://www.youtube.com/watch?v=z_CANxYAsfk
 import ffmpeg from "fluent-ffmpeg";
 
-const fileName = "./video.mp4";
-const saveToFileName = "audio.mp3";
-
-export default function convert(filteName, saveToFileName) {
-  ffmpeg(fileName)
+export default function convert(convertedFileName, saveToFileName) {
+  ffmpeg(convertedFileName)
     .toFormat("mp3")
     .saveToFile(saveToFileName, (stdout, stderr) => {})
     .on("error", (err) => {
@@ -18,5 +15,3 @@ export default function convert(filteName, saveToFileName) {
       console.log(`converting complete`);
     });
 }
-
-convert(fileName, saveToFileName);
