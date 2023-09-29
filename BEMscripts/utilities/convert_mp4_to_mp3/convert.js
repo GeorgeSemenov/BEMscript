@@ -12,6 +12,11 @@ export default function convert(convertedFileName, saveToFileName, cal) {
       console.log(`converted ${convertedFileName} time = ${pr.timemark}`);
     })
     .on("end", () => {
-      console.log(`=== converting ${convertedFileName} complete ===`);
+      console.log(
+        `=== converting ${convertedFileName} to ${saveToFileName} complete ===`
+      );
+      if (typeof cal === "function") {
+        cal();
+      }
     });
 }
