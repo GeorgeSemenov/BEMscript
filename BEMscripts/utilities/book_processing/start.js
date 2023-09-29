@@ -16,30 +16,7 @@ const ofd = "./orig_book"; //original files destination
 const pfd = "./processed_book"; //processed files destination
 
 const filesInFolderOFD = fs.readdirSync(ofd);
-console.log(Array.isArray(filesInFolderOFD));
+const files = filesInFolderOFD.map((f) => `${ofd}/${f}`);
 //ты должен передавать имена файлов вместе с папкой перед их именами
 //переделай массив
-concat(`${ofd}/${filesInFolderOFD}`, `${pfd}/kekPuk.mp3`);
-// const files = [`${ofd}/1.mp3`, `${ofd}/2.mp3`];
-// convertToMp3(`${ofd}/1.mp4`, `${pfd}/kekemuraviek.mp3`);
-
-//Необходимо для concat
-// import ffmpWithoutPath from "@ffmpeg-installer/ffmpeg";
-// import ffmpeg from "fluent-ffmpeg";
-// const ffmpegPath = ffmpWithoutPath.path;
-// ffmpeg.setFfmpegPath(ffmpegPath);
-
-// function concat(files, resultedFileName) {
-//   audioconcat(files)
-//     .concat(resultedFileName)
-//     .on("start", function (command) {
-//       console.log("concatination process started:", command);
-//     })
-//     .on("error", function (err, stdout, stderr) {
-//       console.error("Error:", err);
-//       console.error("ffmpeg stderr:", stderr);
-//     })
-//     .on("end", function (output) {
-//       console.error("Audio created in:", output);
-//     });
-// }
+// concat(files, `${pfd}/kekPuk.mp3`);
