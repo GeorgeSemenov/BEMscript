@@ -1,9 +1,8 @@
 import convert from "./convert.js";
+import getFiles from "../../getFiles.js";
 import fs from "fs";
 
-const regExt = /\.mp4$/i;
-const files = fs.readdirSync("./");
-const mp4Files = files.filter((f) => regExt.test(f));
+const mp4Files = getFiles("./", "mp4");
 
 async function kek() {
   return new Promise(() =>

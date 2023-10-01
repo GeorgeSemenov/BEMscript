@@ -1,22 +1,32 @@
-const fs = require('fs');
-
-const func = function (currentFolder=__dirname, isDevMode = false){
+import fs from "fs";
+//Ищет файлы с расширениями filesExtensionss
+//если filesExtensionss - пуст, значит найдёт все папки
+const defaultFilesArr = [];
+export default function (currentFolder = __dirname, filesExtensions) {
   let files;
-  try{
-    files = fs.readdirSync(currentFolder).filter((file,index) => {
-      if (!fs.lstatSync(`${currentFolder}/${file}`).isDirectory() )
-        return file
+  try {
+    files = fs.readdirSync(currentFolder).filter((file, index) => {
+      if (!fs.lstatSync(`${currentFolder}/${file}`).isDirectory()) return file;
     });
-  }catch(err){
-    console.log(`>>>>>\n  Error in function getFiles\n\n${err}`);
+  } catch (err) {
+    console.error(`>>>>>\n  Error in function getFiles\n\n${err}`);
   }
-  if (files == undefined)
-    files = [];
+  if (!files) {
+    return defaultFilesArr;
+  }
+  if (filesExtensions) {
+    if (typeof filesExtensions === "string") {
+      filesExtensions = [filesExtensions];
+    } else if (!Array.isArray(filesExtensions)) {
+      console.error(
+        `error in getFiles.\nincorrect value of filesExtensions = ${filesExtensions}`
+      );
+      return defaultFilesArr;
+    }
+    const str = `(${filesExtensions.map((e) => "\\." + e).join("|")})`;
+    const reg = new RegExp(str, "i");
+    files = files.filter((f) => reg.test(f));
+  }
 
-  //Этот блок работает только в режиме отладки
-  if ((files.length == 0) && isDevMode)
-    console.log(`\n>>>>>in ${currentFolder} no files\n`);
   return files;
-};
-
-module.exports = func;
+}

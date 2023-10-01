@@ -14,6 +14,7 @@ import split from "../split_audio_file/split.js";
 import fs from "fs";
 import cfol from "../../createFolder.js";
 import dfol from "../../deleteFolder.js";
+import ask from "../../ask.js";
 
 const tempFolderName = "temp";
 const tempFullBookName = "tempFullBook.mp3";
@@ -27,30 +28,57 @@ function processBook() {
   let fullBook = ""; //Тут будет храниться путь к объединённому файлу всей книги
   const filesInFolderOFD = fs.readdirSync(ofd);
   const files = filesInFolderOFD.map((f) => `${ofd}/${f}`); //Файлы с указанием папки хранения
+  const regExt = /\.[^.\s]+$/i;
+  let filesExtenstion;
   if (files.length === 0) {
-    console.log(`looks lik you forgot fill ${ofd} folder. Try again.`);
+    console.error(`looks lik you forgot fill ${ofd} folder. Try again.`);
     return;
-  } else if (files.length === 1) {
-    let res = files[0].match(/\.mp4$/gi);
-    if (res) {
-      res = res[0];
-      if (res === ".mp4") {
-        cfol(tfd);
-        convertToMp3(`${files[0]}`, `${tfd}/${tempConvertedToMp3FileName}`);
-        files[0] = `${tfd}/${tempConvertedToMp3FileName}`;
-        cfd = tfd;
-      } else if (res !== ".mp3") {
-        console.warn("неизвестный формат файла" + files[0]);
-        return;
-      }
-    }
-    fullBook = files[0];
+  }
+
+  filesExtenstion = files[0].match(regExt);
+  if (filesExtenstion) {
+    filesExtenstion = filesExtenstion[0];
   } else {
+    console.error(`files must have extension`);
+    return;
+  }
+
+  if (filesExtenstion === ".mp4") {
+    cfol(tfd);
+    convertToMp3(`${files[0]}`, `${tfd}/${tempConvertedToMp3FileName}`);
+    fullBook = `${tfd}/${tempConvertedToMp3FileName}`;
+    cfd = tfd;
+  } else if (filesExtenstion === ".mp3" && files.length === 1) {
+    fullBook = files[0];
+  } else if (filesExtenstion !== ".mp3") {
+    console.warn("неизвестный формат файла" + files[0]);
+    return;
+  }
+
+  if (files.length > 1) {
     console.log(`Start concatination files.`);
     cfol(tfd);
     concat(files, `${tfd}/${tempFullBookName}`);
     fullBook = `${tfd}/${tempFullBookName}`;
   }
+
+  //Разбиваем fullBook на отрезки заданной длины
+  const segmentDuration = ask(`Iput segment duration in seconds (10): `, 10);
+  const startSegmentationFrom = ask(
+    `Iput start segmentation in seconds (0): `,
+    0
+  );
+  const audioPartPrefixName = ask(
+    "How to name segments after splitting? (segment): ",
+    "segment"
+  );
+  split({
+    start: startSegmentationFrom,
+    originalFileName: fullBook,
+    segmentDuration,
+    audioPartPrefixNameExtension: "mp3",
+    audioPartPrefixName,
+  });
 }
 processBook();
 //ты должен передавать имена файлов вместе с папкой перед их именами
