@@ -8,6 +8,7 @@ import { getAudioDurationInSeconds } from "get-audio-duration";
 //duration в секундах
 export default function audioSplit({
   start,
+  end,
   originalFileName,
   segmentDuration,
   audioPartPrefixNameExtension,
@@ -15,15 +16,35 @@ export default function audioSplit({
 }) {
   let curTime;
   getAudioDurationInSeconds(originalFileName).then((duration) => {
+    if (end) {
+      if (end > duration) {
+        console.warn(
+          `end(${end}) is bigger than full duration(${duration}) ${originalFileName}. mp3 will be splitetd to its duration`
+        );
+        end = duration;
+      } else if (start > end) {
+        console.warn(
+          `looks like you mixed up start(${start} and the end(${end}), i'll fix it.`
+        );
+        const temp = start;
+        start = end;
+        end = temp;
+      }
+    } else {
+      //Если значение для конца - не указанно то оно приравнивается длине трека
+      end = duration;
+    }
+
     for (curTime = start; curTime < duration; curTime += segmentDuration) {
       const est = curTime + segmentDuration; //end segment time
+
       MP3Cutter.cut({
         src: originalFileName,
         target: `${audioPartPrefixName}(${ft(curTime)}__${ft(
-          est < duration ? est : duration
+          est < end ? est : end
         )}).${audioPartPrefixNameExtension}`,
         start: curTime,
-        end: est < duration ? est : duration,
+        end: est < end ? est : end,
       });
     }
   });

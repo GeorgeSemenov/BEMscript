@@ -10,12 +10,14 @@ file = ask(
 what file you choose to split (${file}): `,
   file
 );
+console.log(`You choose ${file}`);
 
 if (files.includes(file)) {
   const originalFileName = file;
   const audioPartPrefixNameExtension = "mp3";
   const audioPartPrefixName = gfn(file);
   const start = +ask(`start splitting from (0): `, 0); //В секундах
+  const end = +ask(`end splitting to (to the end of track): `, false); //В секундах
   const segmentDuration = +ask(`segment duration(${10}): `, 10); //в секундах
   if (typeof start !== "number" || isNaN(start)) {
     console.error(
@@ -28,6 +30,7 @@ if (files.includes(file)) {
   } else {
     splitAudio({
       start,
+      end,
       originalFileName,
       segmentDuration,
       audioPartPrefixNameExtension,
