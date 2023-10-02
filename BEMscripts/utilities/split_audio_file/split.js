@@ -34,18 +34,22 @@ export default function audioSplit({
       //Если значение для конца - не указанно то оно приравнивается длине трека
       end = duration;
     }
-
-    for (curTime = start; curTime < duration; curTime += segmentDuration) {
-      const est = curTime + segmentDuration; //end segment time
+    for (curTime = start; curTime < end; curTime += segmentDuration) {
+      const est =
+        curTime + segmentDuration < end ? curTime + segmentDuration : end; //end segment time
+      const target = `${audioPartPrefixName}(${ft(curTime)}__${ft(
+        est
+      )}).${audioPartPrefixNameExtension}`;
 
       MP3Cutter.cut({
         src: originalFileName,
-        target: `${audioPartPrefixName}(${ft(curTime)}__${ft(
-          est < end ? est : end
-        )}).${audioPartPrefixNameExtension}`,
+        target: target,
         start: curTime,
-        end: est < end ? est : end,
+        end: est,
       });
+      console.log(
+        `start = ${start}, end= ${end}, file = ${originalFileName}, created file = ${target}`
+      );
     }
   });
 }

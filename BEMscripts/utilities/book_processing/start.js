@@ -8,13 +8,16 @@
 */
 
 // import audioconcat from "audioconcat";
-import convertToMp3 from "../convert_mp4_to_mp3/convert.js";
+import convert from "../convert_mp4_to_mp3/convert.js";
 import concat from "../concatenate_files/concatenate.js";
 import split from "../split_audio_file/split.js";
 import fs from "fs";
 import cfol from "../../createFolder.js";
 import dfol from "../../deleteFolder.js";
 import ask from "../../ask.js";
+import getFileNameWithoutExtension from "../../getFileNameWithoutExtension.js";
+import df from "../../deleteFile.js";
+import getFiles from "../../getFiles.js";
 
 const tempFolderName = "temp";
 const tempFullBookName = "tempFullBook.mp3";
@@ -31,7 +34,7 @@ function processBook() {
   const regExt = /\.[^.\s]+$/i;
   let filesExtenstion;
   if (files.length === 0) {
-    console.error(`looks lik you forgot fill ${ofd} folder. Try again.`);
+    console.error(`looks like you forgot fill ${ofd} folder. Try again.`);
     return;
   }
 
@@ -45,8 +48,10 @@ function processBook() {
 
   if (filesExtenstion === ".mp4") {
     cfol(tfd);
-    convertToMp3(`${files[0]}`, `${tfd}/${tempConvertedToMp3FileName}`);
-    fullBook = `${tfd}/${tempConvertedToMp3FileName}`;
+    console.log(`начинаем конвертацию файлов`);
+    const tcfn = `${tfd}/${getFileNameWithoutExtension(files[0])}.mp3`; //temp converted file name
+    convert(files[0], tcfn);
+    fullBook = tcfn;
     cfd = tfd;
   } else if (filesExtenstion === ".mp3" && files.length === 1) {
     fullBook = files[0];
@@ -65,29 +70,27 @@ function processBook() {
   //Разбиваем fullBook на отрезки заданной длины
   const segmentDuration = ask(`Iput segment duration in seconds (10): `, 10);
   const startSegmentationFrom = ask(
-    `Iput start segmentation in seconds (0): `,
-    0
+    `Input start segmentation in seconds (1): `,
+    1
   );
   const audioPartPrefixName = ask(
-    "How to name segments after splitting? (segment): ",
-    "segment"
+    `How to name segments after splitting? (${getFileNameWithoutExtension(
+      fullBook
+    )}): `,
+    getFileNameWithoutExtension(fullBook)
   );
   split({
+    end: false, // до конца файла
     start: startSegmentationFrom,
     originalFileName: fullBook,
     segmentDuration,
     audioPartPrefixNameExtension: "mp3",
-    audioPartPrefixName,
+    audioPartPrefixName: `${tfd}/${audioPartPrefixName}`,
   });
+
+  df(fullBook); //Удаляем полную книгу.
+  //Теперь у нас в папке temp - находится разбитые по нужной длине файлы mp3
+
+  const splitedFiles = getFiles(tfd).map((f) => `${tfd}/${f}`);
 }
 processBook();
-//ты должен передавать имена файлов вместе с папкой перед их именами
-//переделай массив
-// concat(files, `${pfd}/kekPuk.mp3`);
-// split({
-//   start: 1,
-//   originalFileName: `${ofd}/1.mp3`,
-//   segmentDuration: 3,
-//   audioPartPrefixNameExtension: "mp3",
-//   audioPartPrefixName: `${pfd}/puk`,
-// });

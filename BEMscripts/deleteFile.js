@@ -1,7 +1,5 @@
-const fs = require('fs');
+import fs from "fs";
 
-const deleteFile = function(filePath){
+export default function (filePath) {
   fs.unlinkSync(filePath);
 }
-
-module.exports = deleteFile;

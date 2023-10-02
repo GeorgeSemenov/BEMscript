@@ -20,3 +20,8 @@ fs.readdir(folderPath, function (err, files) {
 
   concat(concFls, resultedFileName);
 });
+
+concat(
+  [...Array(10)].map((m) => "./2.mp3"),
+  resultedFileName
+);
