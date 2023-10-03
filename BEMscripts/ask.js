@@ -1,8 +1,10 @@
 //Задаёт вопрос, возвращает ответ. Всё просто.
-const readline = require('readline-sync');
-const _ask = function (question="Create/select block: "){//Задаём вопрос
+import readline from "readline-sync";
+export default function (question = "Create/select block: ", defaultAnswer) {
+  //Задаём вопрос
   let answer = readline.question(`${question}`);
+  if ((typeof answer === "string" || !answer) && defaultAnswer !== undefined) {
+    answer = answer.length === 0 ? defaultAnswer : answer;
+  }
   return answer;
-};
-
-module.exports = _ask;
+}

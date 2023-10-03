@@ -1,20 +1,24 @@
 //Данная функция создаёт папку с переданным именем
 //Если папка уже созданна  (ошибку 4075) то ничего не происходит.
 //В противном случае пробрасывает ошибку дальше.
-const fs = require('fs');
-const createFolder = function (folder){
-  try {
-    fs.mkdirSync(`${folder}`);  
-  }catch(err){
-    if(err.errno == -4075){
-      // console.log(`folder ${folder} already exist, this is good.`);
-    }else{
-      throw(err); 
+import fs from "fs";
+export default function (folder) {
+  if (!fs.existsSync(folder)) {
+    try {
+      fs.mkdirSync(`${folder}`);
+    } catch (err) {
+      if (err.errno == -4075) {
+        // console.log(`folder ${folder} already exist, this is good.`);
+      } else {
+        throw err;
+      }
     }
+  } else {
+    console.warn(`folder ${folder} already exists`);
   }
   // console.log("hello folder " + folder);
   // let pathArr = folder.split('/');
-  // let directoriesArr = [];//Пустой архив директорий, которые уже прошёл node см ниже  
+  // let directoriesArr = [];//Пустой архив директорий, которые уже прошёл node см ниже
   // let k = 0;
   // pathArr.forEach(function(item){
   //   if (!fs.existsSync(item)){
@@ -32,8 +36,8 @@ const createFolder = function (folder){
   //     directoriesArr.push(pathArr[k]);
   //   }
 
-    // k++;
+  // k++;
   // }
-};
+}
 
-module.exports = createFolder;
+// module.exports = createFolder;

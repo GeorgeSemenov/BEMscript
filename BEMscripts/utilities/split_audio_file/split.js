@@ -2,30 +2,57 @@
 //npm i get-audio-duration
 //Для работы этого скрипта нужно установить mp3-cutter и get-audio-duration
 
-const MP3Cutter = require("mp3-cutter");
-const { getAudioDurationInSeconds } = require("get-audio-duration");
+import MP3Cutter from "mp3-cutter";
+import { getAudioDurationInSeconds } from "get-audio-duration";
 
-const originalFileName = "orig.mp3";
-let audioPartPrefixName = "segment";
-let audioPartPrefixNameExtension = "mp3";
-let start = 120; //В секундах
-const segmentDuration = 10; //в секундах
-
-let curTime;
 //duration в секундах
-getAudioDurationInSeconds(originalFileName).then((duration) => {
-  for (curTime = start; curTime < duration; curTime += segmentDuration) {
-    const est = curTime + segmentDuration; //end segment time
-    MP3Cutter.cut({
-      src: originalFileName,
-      target: `${audioPartPrefixName}(${ft(curTime)}__${ft(
-        est < duration ? est : duration
-      )}).${audioPartPrefixNameExtension}`,
-      start: curTime,
-      end: est < duration ? est : duration,
-    });
+export default async function audioSplit({
+  start,
+  end,
+  originalFileName,
+  segmentDuration,
+  audioPartPrefixNameExtension,
+  audioPartPrefixName,
+}) {
+  let curTime;
+  const duration = await getAudioDurationInSeconds(originalFileName);
+
+  if (end) {
+    if (end > duration) {
+      console.warn(
+        `end(${end}) is bigger than full duration(${duration}) ${originalFileName}. mp3 will be splitetd to its duration`
+      );
+      end = duration;
+    } else if (start > end) {
+      console.warn(
+        `looks like you mixed up start(${start} and the end(${end}), i'll fix it.`
+      );
+      const temp = start;
+      start = end;
+      end = temp;
+    }
+  } else {
+    //Если значение для конца - не указанно то оно приравнивается длине трека
+    end = duration;
   }
-});
+  for (curTime = start; curTime < end; curTime += segmentDuration) {
+    const est =
+      curTime + segmentDuration < end ? curTime + segmentDuration : end; //end segment time
+    const target = `${audioPartPrefixName}(${ft(curTime)}__${ft(
+      est
+    )}).${audioPartPrefixNameExtension}`;
+
+    await MP3Cutter.cut({
+      src: originalFileName,
+      target: target,
+      start: curTime,
+      end: est,
+    });
+    console.log(
+      `start = ${start}, end= ${end}, file = ${originalFileName}, created file = ${target}`
+    );
+  }
+}
 
 function ft(secs) {
   return `${parseInt(secs / 3600)}-${parseInt((secs % 3600) / 60)}-${parseInt(
