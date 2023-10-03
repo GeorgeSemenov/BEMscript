@@ -3,14 +3,18 @@
 //В противном случае пробрасывает ошибку дальше.
 import fs from "fs";
 export default function (folder) {
-  try {
-    fs.mkdirSync(`${folder}`);
-  } catch (err) {
-    if (err.errno == -4075) {
-      // console.log(`folder ${folder} already exist, this is good.`);
-    } else {
-      throw err;
+  if (!fs.existsSync(folder)) {
+    try {
+      fs.mkdirSync(`${folder}`);
+    } catch (err) {
+      if (err.errno == -4075) {
+        // console.log(`folder ${folder} already exist, this is good.`);
+      } else {
+        throw err;
+      }
     }
+  } else {
+    console.warn(`folder ${folder} already exists`);
   }
   // console.log("hello folder " + folder);
   // let pathArr = folder.split('/');

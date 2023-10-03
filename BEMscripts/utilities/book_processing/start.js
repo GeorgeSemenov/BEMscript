@@ -14,18 +14,19 @@ import split from "../split_audio_file/split.js";
 import fs from "fs";
 import cfol from "../../createFolder.js";
 import dfol from "../../deleteFolder.js";
+import df from "../../deleteFile.js";
 import ask from "../../ask.js";
 import getFileNameWithoutExtension from "../../getFileNameWithoutExtension.js";
-import df from "../../deleteFile.js";
 import getFiles from "../../getFiles.js";
 
-const tempFolderName = "temp";
 const tempFullBookName = "tempFullBook.mp3";
 const tempConvertedToMp3FileName = "orig.mp3";
 const ofd = "./orig_book"; //original files destination
-const tfd = `./${tempFolderName}`; // temp folderds destination ??
+const tfd = `./temp`; // temp folderds destination ??
 const pfd = "./processed_book"; //processed files destination
 let cfd = ofd; // current files destination ??
+const src = "./src";
+const defaultSegmentDuratin = 10; //В секундах
 
 function processBook() {
   let fullBook = ""; //Тут будет храниться путь к объединённому файлу всей книги
@@ -68,16 +69,19 @@ function processBook() {
   }
 
   //Разбиваем fullBook на отрезки заданной длины
-  const segmentDuration = ask(`Iput segment duration in seconds (10): `, 10);
+  const segmentDuration = ask(
+    `Iput segment duration in seconds (${defaultSegmentDuratin}): `,
+    defaultSegmentDuratin
+  );
   const startSegmentationFrom = ask(
     `Input start segmentation in seconds (1): `,
     1
   );
+  const defaultAudioPartPrefixName =
+    getFileNameWithoutExtension(fullBook).match(/\/[^\/]*$/)[0];
   const audioPartPrefixName = ask(
-    `How to name segments after splitting? (${getFileNameWithoutExtension(
-      fullBook
-    )}): `,
-    getFileNameWithoutExtension(fullBook)
+    `How to name segments after splitting? (${defaultAudioPartPrefixName}): `,
+    defaultAudioPartPrefixName
   );
   split({
     end: false, // до конца файла
@@ -89,8 +93,21 @@ function processBook() {
   });
 
   df(fullBook); //Удаляем полную книгу.
-  //Теперь у нас в папке temp - находится разбитые по нужной длине файлы mp3
 
   const splitedFiles = getFiles(tfd).map((f) => `${tfd}/${f}`);
+
+  const silanceDuration = ask(
+    `Enter silance duration (${defaultSegmentDuratin}): `,
+    defaultSegmentDuratin
+  );
+  const silanceTrack = `${tfd}/silance${silanceDuration}sec.mp3`;
+  concat(
+    [...Array(10)].map((m) => `${src}/silance1sec.mp3`),
+    silanceTrack
+  );
+  splitedFiles.forEach((sf) => {
+    concat([sf, silanceTrack], `${pfd}/`);
+  });
+  dfol(tfd);
 }
 processBook();

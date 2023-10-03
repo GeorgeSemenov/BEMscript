@@ -9,8 +9,8 @@
       "request": "launch",
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\convert_mp4_to_mp3\\start.js",
-      "cwd": "${workspaceFolder}\\convert_mp4_to_mp3"
+      "program": "${workspaceFolder}/book_processing/start.js",
+      "cwd": "${workspaceFolder}/book_processing"
     }
   ]
 }
