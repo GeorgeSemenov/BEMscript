@@ -24,11 +24,10 @@ const tempConvertedToMp3FileName = "orig.mp3";
 const ofd = "./orig_book"; //original files destination
 const tfd = `./temp`; // temp folderds destination ??
 const pfd = "./processed_book"; //processed files destination
-let cfd = ofd; // current files destination ??
 const src = "./src";
 const defaultSegmentDuratin = 10; //В секундах
 
-function processBook() {
+async function processBook() {
   let fullBook = ""; //Тут будет храниться путь к объединённому файлу всей книги
   const filesInFolderOFD = fs.readdirSync(ofd);
   const files = filesInFolderOFD.map((f) => `${ofd}/${f}`); //Файлы с указанием папки хранения
@@ -39,6 +38,28 @@ function processBook() {
     return;
   }
 
+  const segmentDuration = +ask(
+    `Input segment duration in seconds (${defaultSegmentDuratin}): `,
+    defaultSegmentDuratin
+  );
+  const startSegmentationFrom = +ask(
+    `Input start segmentation in seconds (1): `,
+    1
+  );
+  const endSegmentationFrom = +ask(
+    `Input end of segmentation in seconds (to the end): `,
+    false
+  );
+  const defaultAudioPartPrefixName = getFileNameWithoutExtension(fullBook);
+  const audioPartPrefixName = ask(
+    `How to name segments after splitting? (${defaultAudioPartPrefixName}): `,
+    defaultAudioPartPrefixName
+  );
+  const silanceDuration = +ask(
+    `Enter silance duration (${defaultSegmentDuratin}): `,
+    defaultSegmentDuratin
+  );
+
   filesExtenstion = files[0].match(regExt);
   if (filesExtenstion) {
     filesExtenstion = filesExtenstion[0];
@@ -47,13 +68,11 @@ function processBook() {
     return;
   }
 
+  cfol(tfd);
   if (filesExtenstion === ".mp4") {
-    cfol(tfd);
     console.log(`начинаем конвертацию файлов`);
-    const tcfn = `${tfd}/${getFileNameWithoutExtension(files[0])}.mp3`; //temp converted file name
-    convert(files[0], tcfn);
-    fullBook = tcfn;
-    cfd = tfd;
+    fullBook = `${tfd}/${getFileNameWithoutExtension(files[0])}.mp3`; //temp converted file name
+    await convert(files[0], fullBook);
   } else if (filesExtenstion === ".mp3" && files.length === 1) {
     fullBook = files[0];
   } else if (filesExtenstion !== ".mp3") {
@@ -62,52 +81,34 @@ function processBook() {
   }
 
   if (files.length > 1) {
-    console.log(`Start concatination files.`);
-    cfol(tfd);
-    concat(files, `${tfd}/${tempFullBookName}`);
     fullBook = `${tfd}/${tempFullBookName}`;
+    await concat(files, fullBook);
   }
 
-  //Разбиваем fullBook на отрезки заданной длины
-  const segmentDuration = ask(
-    `Iput segment duration in seconds (${defaultSegmentDuratin}): `,
-    defaultSegmentDuratin
-  );
-  const startSegmentationFrom = ask(
-    `Input start segmentation in seconds (1): `,
-    1
-  );
-  const defaultAudioPartPrefixName =
-    getFileNameWithoutExtension(fullBook).match(/\/[^\/]*$/)[0];
-  const audioPartPrefixName = ask(
-    `How to name segments after splitting? (${defaultAudioPartPrefixName}): `,
-    defaultAudioPartPrefixName
-  );
-  split({
-    end: false, // до конца файла
+  // //Разбиваем fullBook на отрезки заданной длины
+
+  await split({
+    end: endSegmentationFrom,
     start: startSegmentationFrom,
     originalFileName: fullBook,
     segmentDuration,
     audioPartPrefixNameExtension: "mp3",
     audioPartPrefixName: `${tfd}/${audioPartPrefixName}`,
   });
-
   df(fullBook); //Удаляем полную книгу.
 
   const splitedFiles = getFiles(tfd).map((f) => `${tfd}/${f}`);
-
-  const silanceDuration = ask(
-    `Enter silance duration (${defaultSegmentDuratin}): `,
-    defaultSegmentDuratin
-  );
   const silanceTrack = `${tfd}/silance${silanceDuration}sec.mp3`;
-  concat(
+  await concat(
     [...Array(10)].map((m) => `${src}/silance1sec.mp3`),
     silanceTrack
   );
-  splitedFiles.forEach((sf) => {
-    concat([sf, silanceTrack], `${pfd}/`);
-  });
+  for (const sf of splitedFiles) {
+    await concat(
+      [sf, silanceTrack],
+      `${pfd}/${getFileNameWithoutExtension(sf)}.mp3`
+    );
+  }
   dfol(tfd);
 }
 processBook();

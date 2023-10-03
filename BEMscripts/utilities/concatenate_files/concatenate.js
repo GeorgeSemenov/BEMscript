@@ -8,19 +8,26 @@ import audioconcat from "audioconcat";
 import ffmpWithoutPath from "@ffmpeg-installer/ffmpeg";
 import ffmpeg from "fluent-ffmpeg";
 
-export default function concat(files, resultedFileName) {
+export default async function concat(files, resultedFileName, cal) {
   const ffmpegPath = ffmpWithoutPath.path;
   ffmpeg.setFfmpegPath(ffmpegPath);
-  audioconcat(files)
-    .concat(resultedFileName)
-    .on("start", function (command) {
-      console.log("concatination process started:", command);
-    })
-    .on("error", function (err, stdout, stderr) {
-      console.error("Error:", err);
-      console.error("ffmpeg stderr:", stderr);
-    })
-    .on("end", function (output) {
-      console.error("Audio created in:", output);
-    });
+  return new Promise((resolve, reject) => {
+    audioconcat(files)
+      .concat(resultedFileName)
+      .on("start", function (command) {
+        console.log("concatination process started:", command);
+      })
+      .on("error", function (err, stdout, stderr) {
+        console.error("Error:", err);
+        console.error("ffmpeg stderr:", stderr);
+        reject(err);
+      })
+      .on("end", function (output) {
+        console.error("Audio created in:", resultedFileName);
+        if (typeof cal === "function") {
+          cal();
+        }
+        resolve(output);
+      });
+  });
 }

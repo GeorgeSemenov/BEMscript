@@ -1,11 +1,10 @@
 import fs from "fs";
 
 export default function deleteFolder(folder) {
-  fs.rmdir(folderPath, { recursive: true }, (err) => {
-    if (err) {
-      console.error(err);
-      throw err;
-      return;
-    }
-  });
+  try {
+    fs.rmdirSync(folder, { recursive: true });
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 }
