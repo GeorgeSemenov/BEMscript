@@ -36,15 +36,24 @@ export default async function convert(convertedFileName, saveToFileName, cal) {
   });
 }
 
-export function recursiveConvert(convertedFiles, isVirtualArrCreated = false) {
+export async function recursiveConvert(
+  filesToConvert,
+  folderForConvertedFiles = "",
+  isVirtualArrCreated = false
+) {
   const virtualArray = isVirtualArrCreated
-    ? convertedFiles
-    : convertedFiles.concat([]).reverse();
+    ? filesToConvert
+    : filesToConvert.concat([]).reverse();
   const file = virtualArray.pop();
-  const sfn = `${gfnwe(file)}.mp3`; //saved file name
+  const sfn = `${folderForConvertedFiles}/${gfnwe(file)}.mp3`; //saved file name
+  console.log(`sfn = ${sfn}`);
   if (virtualArray.length) {
-    convert(file, sfn, recursiveConvert(virtualArray, true));
+    await convert(
+      file,
+      sfn,
+      recursiveConvert(virtualArray, folderForConvertedFiles, true)
+    );
   } else {
-    convert(file, sfn);
+    await convert(file, sfn);
   }
 }
