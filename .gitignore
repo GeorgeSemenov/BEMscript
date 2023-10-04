@@ -5,6 +5,14 @@ prototype
 build
 BEMscripts/utilities/png_to_svg/after
 BEMscripts/utilities/png_to_svg/before
+BEMscripts/utilities/book_processing/orig_book
+BEMscripts/utilities/book_processing/processed_book
+BEMscripts/utilities/concatenate_files/originalFiles
+BEMscripts/utilities/concatenate_files/result
+BEMscripts/utilities/split_audio_file/original_files
+BEMscripts/utilities/split_audio_file/splited_files
+BEMscripts/utilities/convert_mp4_to_mp3/original_files
+BEMscripts/utilities/convert_mp4_to_mp3/result
 *.sublime-project
 *.sublime-workspace
 

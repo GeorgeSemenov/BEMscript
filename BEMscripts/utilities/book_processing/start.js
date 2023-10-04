@@ -11,56 +11,43 @@
 import convert from "../convert_mp4_to_mp3/convert.js";
 import concat from "../concatenate_files/concatenate.js";
 import split from "../split_audio_file/split.js";
-import fs from "fs";
 import cfol from "../../createFolder.js";
 import dfol from "../../deleteFolder.js";
 import df from "../../deleteFile.js";
-import ask from "../../ask.js";
+import cf from "../../copyFile.js";
+
 import getFileNameWithoutExtension from "../../getFileNameWithoutExtension.js";
 import getFiles from "../../getFiles.js";
 
-const tempFullBookName = "tempFullBook.mp3";
-const tempConvertedToMp3FileName = "orig.mp3";
+import survey from "./src/utils/survey.js";
+
 const ofd = "./orig_book"; //original files destination
 const tfd = `./temp`; // temp folderds destination ??
 const pfd = "./processed_book"; //processed files destination
 const src = "./src";
-const defaultSegmentDuratin = 10; //В секундах
+let isNeedToSaveMP3Book = false;
 
 async function processBook() {
   let fullBook = ""; //Тут будет храниться путь к объединённому файлу всей книги
-  const filesInFolderOFD = fs.readdirSync(ofd);
-  const files = filesInFolderOFD.map((f) => `${ofd}/${f}`); //Файлы с указанием папки хранения
-  const regExt = /\.[^.\s]+$/i;
-  let filesExtenstion;
-  if (files.length === 0) {
+  const filesInFolderOFD = getFiles(ofd);
+  if (filesInFolderOFD.length === 0) {
     console.error(`looks like you forgot fill ${ofd} folder. Try again.`);
     return;
   }
+  const fileName = filesInFolderOFD[0];
+  const files = filesInFolderOFD.map((f) => `${ofd}/${f}`); //Файлы с указанием папки хранения
+  const regExt = /\.[^.\s]+$/i;
+  let filesExtenstion;
 
-  const segmentDuration = +ask(
-    `Input segment duration in seconds (${defaultSegmentDuratin}): `,
-    defaultSegmentDuratin
-  );
-  const startSegmentationFrom = +ask(
-    `Input start segmentation in seconds (1): `,
-    1
-  );
-  const endSegmentationFrom = +ask(
-    `Input end of segmentation in seconds (to the end): `,
-    false
-  );
-  const defaultAudioPartPrefixName = getFileNameWithoutExtension(fullBook);
-  const audioPartPrefixName = ask(
-    `How to name segments after splitting? (${defaultAudioPartPrefixName}): `,
-    defaultAudioPartPrefixName
-  );
-  const silanceDuration = +ask(
-    `Enter silance duration (${defaultSegmentDuratin}): `,
-    defaultSegmentDuratin
-  );
+  const {
+    segmentDuration,
+    silanceDuration,
+    startSegmentationFrom,
+    endSegmentationFrom,
+    audioPartPrefixName,
+  } = survey(getFileNameWithoutExtension(fileName));
 
-  filesExtenstion = files[0].match(regExt);
+  filesExtenstion = fileName.match(regExt);
   if (filesExtenstion) {
     filesExtenstion = filesExtenstion[0];
   } else {
@@ -71,8 +58,9 @@ async function processBook() {
   cfol(tfd);
   if (filesExtenstion === ".mp4") {
     console.log(`начинаем конвертацию файлов`);
-    fullBook = `${tfd}/${getFileNameWithoutExtension(files[0])}.mp3`; //temp converted file name
+    fullBook = `${tfd}/${getFileNameWithoutExtension(fileName)}.mp3`; //temp converted file name
     await convert(files[0], fullBook);
+    isNeedToSaveMP3Book = true;
   } else if (filesExtenstion === ".mp3" && files.length === 1) {
     fullBook = files[0];
   } else if (filesExtenstion !== ".mp3") {
@@ -81,11 +69,9 @@ async function processBook() {
   }
 
   if (files.length > 1) {
-    fullBook = `${tfd}/${tempFullBookName}`;
+    fullBook = `${tfd}/${fileName}`;
     await concat(files, fullBook);
   }
-
-  // //Разбиваем fullBook на отрезки заданной длины
 
   await split({
     end: endSegmentationFrom,
@@ -95,12 +81,17 @@ async function processBook() {
     audioPartPrefixNameExtension: "mp3",
     audioPartPrefixName: `${tfd}/${audioPartPrefixName}`,
   });
+
+  if (isNeedToSaveMP3Book) {
+    cf(fullBook, `${pfd}/!${getFileNameWithoutExtension(fileName)}.mp3`);
+  }
+
   df(fullBook); //Удаляем полную книгу.
 
   const splitedFiles = getFiles(tfd).map((f) => `${tfd}/${f}`);
   const silanceTrack = `${tfd}/silance${silanceDuration}sec.mp3`;
   await concat(
-    [...Array(10)].map((m) => `${src}/silance1sec.mp3`),
+    [...Array(silanceDuration)].map((m) => `${src}/silance1sec.mp3`),
     silanceTrack
   );
   for (const sf of splitedFiles) {
