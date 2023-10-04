@@ -1,4 +1,5 @@
 export default function convertStringToSeconds(str) {
+  if (typeof +str === "number ") return str;
   if (str !== "string") {
     console.error(
       `error in function convertStringToSeconds. Type of str(${str}) = ${typeof str}
@@ -6,8 +7,15 @@ export default function convertStringToSeconds(str) {
     );
     return 0;
   }
-  const h = +str.match(/\d+h/i)[0].slice[(0, -1)];
-  const m = +str.match(/\d+m/i)[0].slice[(0, -1)];
-  const s = +str.match(/\d+s/i)[0].slice[(0, -1)];
+  let h = t(str, "h");
+  const m = t(str, "m");
+  const s = s(str, "s");
   return h * (60 * 60) + m * 60 + s;
+}
+
+function t(str, l) {
+  const s = `\\d+${l}`;
+  const reg = new RegExp(s, "i");
+  result = str.match(reg);
+  return result ? +result[0].slice(0, -1) : 0;
 }
