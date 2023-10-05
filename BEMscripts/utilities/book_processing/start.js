@@ -70,6 +70,7 @@ async function processBook() {
 
   if (files.length > 1) {
     fullBook = `${tfd}/${fileName}`;
+    isNeedToSaveMP3Book = true;
     await concat(files, fullBook);
   }
 
