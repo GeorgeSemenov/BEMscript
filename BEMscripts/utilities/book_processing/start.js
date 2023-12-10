@@ -35,6 +35,7 @@ async function processBook() {
     return;
   }
   const fileName = filesInFolderOFD[0];
+  const isNeedToDeleteConvertedFullBook = false;
   const files = filesInFolderOFD.map((f) => `${ofd}/${f}`); //Файлы с указанием папки хранения
   const regExt = /\.[^.\s]+$/i;
   let filesExtenstion;
@@ -57,6 +58,7 @@ async function processBook() {
 
   cfol(tfd);
   if (filesExtenstion === ".mp4") {
+    isNeedToDeleteConvertedFullBook = true;
     console.log(`начинаем конвертацию файлов`);
     fullBook = `${tfd}/${getFileNameWithoutExtension(fileName)}.mp3`; //temp converted file name
     await convert(files[0], fullBook);
@@ -87,7 +89,9 @@ async function processBook() {
     cf(fullBook, `${pfd}/!${getFileNameWithoutExtension(fileName)}.mp3`);
   }
 
-  df(fullBook); //Удаляем полную книгу.
+  if (isNeedToDeleteConvertedFullBook) {
+    df(fullBook); //Удаляем полную книгу.
+  }
 
   const splitedFiles = getFiles(tfd).map((f) => `${tfd}/${f}`);
   const silanceTrack = `${tfd}/silance${silanceDuration}sec.mp3`;
